@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Colour themes, picked with the palette button in the nav (see lib/theme.ts). Channels are
+     "R G B" so Tailwind can add opacity. --scene-filter recolours the 3D maze to match. */
+  :root,
+  [data-theme='crimson'] {
+    --c-red: 255 42 31;
+    --c-ember: 255 106 0;
+    --c-blood: 138 10 10;
+    --c-tint: 255 211 205;
+    --c-signal: 47 139 255;
+    --c-signal-soft: 140 196 255;
+    --scene-filter: none;
+  }
+  [data-theme='cobalt'] {
+    --c-red: 47 139 255;
+    --c-ember: 0 200 255;
+    --c-blood: 12 44 140;
+    --c-tint: 205 225 255;
+    --c-signal: 255 176 32;
+    --c-signal-soft: 255 214 140;
+    --scene-filter: hue-rotate(215deg) saturate(1.15);
+  }
+  [data-theme='emerald'] {
+    --c-red: 16 190 110;
+    --c-ember: 150 230 40;
+    --c-blood: 6 100 54;
+    --c-tint: 205 255 228;
+    --c-signal: 47 139 255;
+    --c-signal-soft: 140 196 255;
+    --scene-filter: hue-rotate(145deg);
+  }
+  [data-theme='violet'] {
+    --c-red: 160 80 255;
+    --c-ember: 255 70 190;
+    --c-blood: 76 20 140;
+    --c-tint: 232 214 255;
+    --c-signal: 0 214 255;
+    --c-signal-soft: 150 236 255;
+    --scene-filter: hue-rotate(268deg) saturate(1.1);
+  }
+  html,
+  body {
+    @apply bg-bg font-sans text-white antialiased;
+    /* clip, not hidden: hidden turns body into a scroll container and breaks position: sticky */
+    overflow-x: clip;
+  }
+  ::selection {
+    @apply bg-red/60 text-white;
+  }
+}
+
+@layer components {
+  .label {
+    @apply font-grotesk text-[11px] font-medium uppercase tracking-[0.32em] text-white/60;
+  }
+  .glass-pill {
+    @apply rounded-full border border-red/40 bg-white/[0.04] backdrop-blur-md transition duration-300
+      hover:scale-105 hover:border-red hover:bg-red/10 hover:shadow-glow
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70;
+  }
+  /* ---- Projects motion helpers ------------------------------------------------------------ */
+  /* The cinematic ease used across the Projects section */
+  .ease-cinema {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Clear, animated keyboard focus: the outline slides out from the edge */
+  .focus-ring {
+    outline: 2px solid transparent;
+    outline-offset: 0;
+    transition-property: outline-color, outline-offset, color, background-color, border-color, box-shadow;
+    transition-duration: 220ms;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .focus-ring:focus-visible {
+    outline-color: theme('colors.red');
+    outline-offset: 3px;
+  }
+  /* Short press-and-release feel (uses the separate `scale` property so it never fights transforms) */
+  .press {
+    transition: scale 180ms cubic-bezier(0.16, 1, 0.3, 1), outline-color 220ms, outline-offset 220ms,
+      color 200ms, background-color 200ms, border-color 200ms, box-shadow 200ms;
+  }
+  .press:active {
+    scale: 0.96;
+  }
+  /* Editable calculator values and the date: neon blue, so they read as clickable */
+  .neon-value {
+    color: rgb(var(--c-signal-soft));
+    text-shadow: 0 0 10px rgb(var(--c-signal) / 0.85), 0 0 2px rgb(var(--c-signal) / 0.9);
+    caret-color: rgb(var(--c-signal));
+  }
+  /* The native calendar icon, tinted neon blue (the white icon from color-scheme: dark, recoloured) */
+  .neon-date::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 1;
+    filter: brightness(0) invert(46%) sepia(89%) saturate(2700%) hue-rotate(201deg) brightness(101%)
+      drop-shadow(0 0 4px rgb(var(--c-signal) / 0.9));
+  }
+  .text-glow {
+    text-shadow: 0 0 40px rgb(var(--c-red) / 0.45), 0 0 2px rgb(255 255 255 / 0.4);
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+
+@keyframes scroll-line {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.animate-scroll-line {
+  animation: scroll-line 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 6px 1px rgb(var(--c-red) / 0.9); }
+  50% { box-shadow: 0 0 14px 4px rgb(var(--c-red) / 0.6); }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ───────────────────────── Projects section motion ───────────────────────── */
+/* A soft light that follows the cursor across the story panel and flow steps (see Work.tsx). */
+#work .story-light {
+  --mx: -999px;
+  --my: -999px;
+  background-image: radial-gradient(420px circle at var(--mx) var(--my), rgb(139 227 247 / 0.08), transparent 65%);
+}
