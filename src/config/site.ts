@@ -1,11 +1,10 @@
 // All brand text, links and colors live here. Edit this file to update the site.
 
 // The résumé PDF is hosted with this site (public/). Its source is resume/resume.html.
-const OLD_SITE = 'https://michaeljohnbuencamino.vercel.app'
 const RESUME = '/Michael-John-Buencamino-Resume.pdf'
-// Screenshots, logos and the portrait are served from the previous portfolio too. To host them here,
-// copy the files into /public (same folder names) and change this to ''.
-const MEDIA = OLD_SITE
+// Screenshots, logos and the portrait are hosted with this site too (public/work, public/logos,
+// public/images). Set this to another origin only to serve them from elsewhere.
+const MEDIA = ''
 
 export type Shot = { src: string; caption: string }
 
