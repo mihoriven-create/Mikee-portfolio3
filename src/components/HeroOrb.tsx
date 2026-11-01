@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -147,6 +147,11 @@ export function Orb({
   )
 }
 
+// How far the canvas reaches past the orb's circle on each side, as a share of its size, and the
+// field of view that shows the orb at the same size as a 35° view of the circle alone would.
+const OVERHANG = 0.2
+const OVERHANG_FOV = 2 * THREE.MathUtils.radToDeg(Math.atan((1 + 2 * OVERHANG) * Math.tan(THREE.MathUtils.degToRad(35 / 2))))
+
 // Centre-stage orb for the hero. Its own small canvas with a transparent background; it stops
 // drawing while the hero is off screen, and holds still for reduced-motion visitors.
 export default function HeroOrb({ reducedMotion }: { reducedMotion: boolean }) {
@@ -166,20 +171,25 @@ export default function HeroOrb({ reducedMotion }: { reducedMotion: boolean }) {
   return (
     <div
       ref={wrap}
-      className="h-full w-full"
+      className="relative h-full w-full"
       onPointerEnter={() => (hovered.current = true)}
       onPointerLeave={() => (hovered.current = false)}
     >
-      <Canvas
-        // Size from layout only: re-measuring on scroll read the box mid-animation and shrank the orb
-        resize={{ scroll: false, debounce: { scroll: 0, resize: 100 } }}
-        dpr={[1, 2]}
-        frameloop={animate && visible ? 'always' : 'demand'}
-        gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
-        camera={{ fov: 35, position: [0, 0, 7.2] }}
-      >
-        <Orb animate={animate} hovered={hovered} />
-      </Canvas>
+      {/* The canvas overhangs the clickable circle so the orbits never get cut off at its edge when
+          the orb tilts toward the cursor; the wider field of view keeps the orb the same size. */}
+      <div className="pointer-events-none absolute" style={{ inset: `${-OVERHANG * 100}%` }}>
+        <Canvas
+          // Size from layout only: re-measuring on scroll read the box mid-animation and shrank the orb
+          resize={{ scroll: false, debounce: { scroll: 0, resize: 100 } }}
+          dpr={[1, 2]}
+          frameloop={animate && visible ? 'always' : 'demand'}
+          gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
+          camera={{ fov: OVERHANG_FOV, position: [0, 0, 7.2] }}
+          eventSource={wrap as MutableRefObject<HTMLElement>}
+        >
+          <Orb animate={animate} hovered={hovered} />
+        </Canvas>
+      </div>
     </div>
   )
 }
