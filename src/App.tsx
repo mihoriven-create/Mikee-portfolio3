@@ -12,10 +12,12 @@ import { Loader } from './components/Loader'
 import { Nav } from './components/Nav'
 import { Organizations } from './components/Organizations'
 import { Work } from './components/Work'
+import { WorkflowSignal } from './components/WorkflowSignal'
 import { useReveal, useSmoothScroll } from './lib/motion'
 import { useMediaQuery } from './lib/useMediaQuery'
 
 const Scene = lazy(() => import('./components/Scene/Scene'))
+const OrbTraveler = lazy(() => import('./components/OrbTraveler'))
 
 export default function App() {
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
@@ -81,6 +83,14 @@ export default function App() {
 
         <Contact />
       </main>
+
+      {/* The lead workflow pulse beside The Approach, and the orb that follows the page to Contact */}
+      <WorkflowSignal reducedMotion={reducedMotion} />
+      {ready && (
+        <Suspense fallback={null}>
+          <OrbTraveler reducedMotion={reducedMotion} />
+        </Suspense>
+      )}
     </>
   )
 }

@@ -255,6 +255,9 @@ export function Contact() {
             </a>
           </li>
         </ul>
+
+        {/* Where the travelling orb comes to rest (see OrbTraveler) */}
+        <div data-orb-dock aria-hidden className="mt-8 aspect-square w-[150px] sm:w-[190px]" />
       </div>
 
       <footer className="mt-14 w-full pb-10">

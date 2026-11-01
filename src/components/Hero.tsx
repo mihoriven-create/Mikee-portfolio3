@@ -140,7 +140,8 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
 
         {/* Bottom corners: pitch and scroll cue on the left, actions on the right */}
         <div className="relative z-10 mt-4 flex w-full flex-col gap-6 sm:gap-8 xl:mt-0 xl:flex-row xl:items-end xl:justify-between">
-          <div data-hero-fade className="max-w-[22rem]">
+          {/* data-orb-clear: the travelling orb waits until this has scrolled away */}
+          <div data-hero-fade data-orb-clear className="max-w-[22rem]">
             <p className="text-sm leading-relaxed text-white/70">{site.hero.description}</p>
             <a
               href="#approach"

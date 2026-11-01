@@ -66,12 +66,23 @@ function Orbit({
   )
 }
 
-function Orb({ animate, hovered }: { animate: boolean; hovered: { current: boolean } }) {
+// `size` scales the whole orb inside the scene (the travelling orb uses it); the canvas itself never resizes.
+export function Orb({
+  animate,
+  hovered,
+  size,
+}: {
+  animate: boolean
+  hovered: { current: boolean }
+  size?: { current: number }
+}) {
   const { accent, ember, tint } = useThemeColors()
   const gem = useRef<THREE.Mesh>(null)
   const shell = useRef<THREE.LineSegments>(null)
   const rig = useRef<THREE.Group>(null)
   const shellGeometry = useMemo(() => new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.32, 2)), [])
+  // Grows in on load and swells a little on hover
+  const swell = useRef(animate ? 0.85 : 1)
   // Extra spin that kicks in when the theme changes and eases back to normal
   const boost = useRef(0)
   const first = useRef(true)
@@ -84,24 +95,27 @@ function Orb({ animate, hovered }: { animate: boolean; hovered: { current: boole
   }, [accent])
 
   useFrame(({ pointer }, delta) => {
-    if (!animate) return
+    if (!animate) {
+      rig.current?.scale.setScalar(size?.current ?? 1)
+      return
+    }
     if (gem.current) {
       gem.current.rotation.y += delta * (0.25 + boost.current)
       boost.current = THREE.MathUtils.damp(boost.current, 0, 3, delta)
       gem.current.rotation.x += delta * 0.08
     }
     if (shell.current) shell.current.rotation.y -= delta * 0.06
-    // Gentle tilt toward the cursor; grows in on load and swells a little on hover
+    // Gentle tilt toward the cursor
     if (rig.current) {
-      const target = hovered.current ? 1.05 : 1
-      rig.current.scale.setScalar(THREE.MathUtils.damp(rig.current.scale.x, target, 4, delta))
+      swell.current = THREE.MathUtils.damp(swell.current, hovered.current ? 1.05 : 1, 4, delta)
+      rig.current.scale.setScalar(swell.current * (size?.current ?? 1))
       rig.current.rotation.x = THREE.MathUtils.lerp(rig.current.rotation.x, -pointer.y * 0.1, 0.05)
       rig.current.rotation.y = THREE.MathUtils.lerp(rig.current.rotation.y, pointer.x * 0.12, 0.05)
     }
   })
 
   return (
-    <group ref={rig} scale={animate ? 0.85 : 1}>
+    <group ref={rig} scale={(animate ? 0.85 : 1) * (size?.current ?? 1)}>
       <ambientLight intensity={0.15} />
       <directionalLight position={[-3, 4, 5]} intensity={2.2} color={tint} />
       <pointLight position={[3, -2, 3]} intensity={10} color={accent} />

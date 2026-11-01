@@ -51,7 +51,8 @@ export function Approach({ reducedMotion }: { reducedMotion: boolean }) {
     <section id="approach" className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-20 pt-24 sm:px-8">
       <div data-reveal>
         <SectionLabel>{approach.label}</SectionLabel>
-        <p className="mt-6 max-w-4xl text-balance font-grotesk text-2xl font-medium leading-snug text-white [text-shadow:0_2px_24px_rgba(7,3,10,0.9)] sm:text-4xl">
+        {/* data-orb-start: the travelling orb fades in as this line comes up the screen */}
+        <p data-orb-start className="mt-6 max-w-4xl text-balance font-grotesk text-2xl font-medium leading-snug text-white [text-shadow:0_2px_24px_rgba(7,3,10,0.9)] sm:text-4xl">
           {approach.statement}
         </p>
       </div>
