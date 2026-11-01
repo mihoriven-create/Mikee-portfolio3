@@ -104,17 +104,18 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
           className="pointer-events-none absolute left-1/2 top-[45%] -z-10 h-[90%] w-[min(1400px,130vw)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(7,3,10,0.78)_0%,rgba(7,3,10,0.45)_45%,transparent_72%)]"
         />
 
-        {/* Top row: location and local time at the left, the role centred on the same line */}
+        {/* Top row: location at the left, local time at the right; the role and name sit below */}
         <header className="relative z-10 w-full text-center">
-          <div data-hero-fade className="flex flex-col items-center gap-2 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:items-center xl:gap-6">
-            <p className="label order-2 text-[10px] tracking-[0.45em] text-red sm:text-[11px] xl:order-none xl:col-start-2 xl:row-start-1">
-              {site.role}
-            </p>
-            <p className="label order-1 text-[10px] text-white/50 sm:text-[11px] xl:order-none xl:col-start-1 xl:row-start-1 xl:justify-self-start">
-              {site.location} · <LocalTime /> local time
+          <div data-hero-fade className="label flex items-center justify-between gap-4 text-[10px] text-white/50 sm:text-[11px]">
+            <p>{site.location}</p>
+            <p>
+              <LocalTime /> local time
             </p>
           </div>
-          <h1 className="mt-5 font-display font-black uppercase leading-[0.95] tracking-tight">
+          <p data-hero-fade className="label mt-8 text-[10px] tracking-[0.45em] text-red sm:mt-10 sm:text-[11px] xl:mt-12">
+            {site.role}
+          </p>
+          <h1 className="mt-4 font-display font-black uppercase leading-[0.95] tracking-tight xl:mt-5">
             <span data-hero-mask className="block overflow-hidden pb-[0.04em]">
               <span data-hero-line className="block text-[clamp(1.7rem,4.6vw,4.6rem)] text-white">
                 {site.hero.headline[0]}
