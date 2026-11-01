@@ -127,11 +127,11 @@ export function About({ reducedMotion }: { reducedMotion: boolean }) {
         {stats.map((stat) => (
           <div key={stat.label} className="flex flex-col-reverse justify-end bg-[#0b0408] p-6 sm:p-8">
             <dt className="label mt-3 text-white/55">{stat.label}</dt>
-            <dd className="font-display text-5xl font-black text-white [text-shadow:0_0_30px_rgb(var(--c-red)/0.6)] sm:text-6xl">
+            <dd className="font-display text-5xl font-black text-pop-text [text-shadow:0_0_30px_rgb(var(--c-pop)/0.6)] sm:text-6xl">
               <span data-count={stat.value} className="tabular-nums">
                 {stat.value}
               </span>
-              <span className="text-red">{stat.suffix}</span>
+              <span className="text-pop">{stat.suffix}</span>
             </dd>
           </div>
         ))}

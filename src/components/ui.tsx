@@ -2,10 +2,10 @@ import type { ReactNode } from 'react'
 
 export function SectionLabel({ index, children, center }: { index?: string; children: ReactNode; center?: boolean }) {
   return (
-    <p className={`label flex items-center gap-3 ${center ? 'justify-center' : ''}`}>
-      {index && <span className="text-red">({index})</span>}
+    <p className={`label section-title flex items-center gap-3 ${center ? 'justify-center' : ''}`}>
+      {index && <span className="text-pop">({index})</span>}
       {children}
-      <span className="h-px w-8 bg-red/70" />
+      <span className="h-px w-8 bg-pop/70" />
     </p>
   )
 }

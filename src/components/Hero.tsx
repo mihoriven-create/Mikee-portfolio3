@@ -150,7 +150,7 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
                 e.preventDefault()
                 scrollToHash('#approach')
               }}
-              className="label mt-4 inline-flex items-center gap-2 text-[10px] text-red transition hover:text-white"
+              className="label mt-4 inline-flex items-center gap-2 text-[10px] text-pop transition hover:text-white"
             >
               <ArrowDown size={13} aria-hidden className="animate-bounce" /> Scroll
             </a>

@@ -12,7 +12,16 @@ const themeColor = (name: string) => {
 
 // The accent and tint colours of the active theme; updates when the palette button switches theme.
 function useThemeColors() {
-  const read = () => ({ accent: themeColor('--c-red'), ember: themeColor('--c-ember'), tint: themeColor('--c-tint') })
+  const read = () => ({
+    accent: themeColor('--c-red'),
+    ember: themeColor('--c-ember'),
+    tint: themeColor('--c-tint'),
+    // The orbits: the theme's accent, or warm yellow in White
+    pop: themeColor('--c-pop'),
+    popSoft: themeColor('--c-pop-soft'),
+    orbitOpacity:
+      parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--orbit-opacity')) || 0.45,
+  })
   const [colors, setColors] = useState(read)
   useEffect(() => {
     const observer = new MutationObserver(() => setColors(read()))
@@ -29,12 +38,14 @@ function Orbit({
   speed,
   beads,
   color,
+  opacity,
 }: {
   radius: [number, number]
   tilt: [number, number, number]
   speed: number
   beads: number
   color: THREE.Color
+  opacity: number
 }) {
   const group = useRef<THREE.Group>(null)
   const beadRefs = useRef<(THREE.Mesh | null)[]>([])
@@ -54,7 +65,7 @@ function Orbit({
   return (
     <group ref={group} rotation={tilt}>
       <lineLoop geometry={ring}>
-        <lineBasicMaterial color={color} transparent opacity={0.45} />
+        <lineBasicMaterial color={color} transparent opacity={opacity} />
       </lineLoop>
       {offsets.map((_, i) => (
         <mesh key={i} ref={(m) => (beadRefs.current[i] = m)}>
@@ -76,7 +87,7 @@ export function Orb({
   hovered: { current: boolean }
   size?: { current: number }
 }) {
-  const { accent, ember, tint } = useThemeColors()
+  const { accent, ember, tint, pop, popSoft, orbitOpacity } = useThemeColors()
   const gem = useRef<THREE.Mesh>(null)
   const shell = useRef<THREE.LineSegments>(null)
   const rig = useRef<THREE.Group>(null)
@@ -140,9 +151,9 @@ export function Orb({
         <lineBasicMaterial color={tint} transparent opacity={0.16} />
       </lineSegments>
 
-      <Orbit radius={[1.95, 1.2]} tilt={[0.35, 0.2, 0.3]} speed={0.05} beads={4} color={accent} />
-      <Orbit radius={[1.7, 1.55]} tilt={[1.25, -0.3, -0.3]} speed={0.035} beads={3} color={ember} />
-      <Orbit radius={[2.05, 0.9]} tilt={[-0.25, 0.4, -0.2]} speed={0.04} beads={3} color={accent} />
+      <Orbit radius={[1.95, 1.2]} tilt={[0.35, 0.2, 0.3]} speed={0.05} beads={4} color={pop} opacity={orbitOpacity} />
+      <Orbit radius={[1.7, 1.55]} tilt={[1.25, -0.3, -0.3]} speed={0.035} beads={3} color={popSoft} opacity={orbitOpacity} />
+      <Orbit radius={[2.05, 0.9]} tilt={[-0.25, 0.4, -0.2]} speed={0.04} beads={3} color={pop} opacity={orbitOpacity} />
     </group>
   )
 }

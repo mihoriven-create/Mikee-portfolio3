@@ -99,8 +99,8 @@ export function Capabilities() {
 
       <div className="mt-20">
         <div data-reveal="left" className="flex items-end justify-between gap-4">
-          <p className="label flex items-center gap-3">
-            <Boxes size={14} className="text-red" aria-hidden /> Toolkit
+          <p className="label section-title flex items-center gap-3">
+            <Boxes size={14} className="text-pop" aria-hidden /> Toolkit
           </p>
           <p className="label text-[10px] text-white/45">
             {capabilities.toolkit.reduce((n, g) => n + g.items.length, 0)} tools · {capabilities.toolkit.length} groups

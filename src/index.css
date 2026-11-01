@@ -14,8 +14,9 @@
     --c-ember: 255 255 255;
     --c-blood: 96 96 96;
     --c-tint: 255 255 255;
-    --c-signal: 255 255 255;
-    --c-signal-soft: 225 225 225;
+    /* Warm yellow keeps White lively: the Fig. 01 line, the story tabs and the form fields */
+    --c-signal: 255 200 61;
+    --c-signal-soft: 255 225 140;
     --c-on-accent: 10 10 10;
     --scene-filter: grayscale(1) brightness(1.15);
   }
@@ -68,6 +69,23 @@
     --c-signal-soft: 255 232 176;
     --c-on-accent: 18 12 2;
     --scene-filter: grayscale(1) sepia(1) saturate(2.4) brightness(1.05);
+  }
+  /* "Pop" accents: the orb's orbits, the About numbers and the contact cards. Every theme uses its
+     own accent (and white numbers); only White swaps in warm yellow. White is also the default,
+     before a visitor has picked a theme. */
+  :root {
+    --c-pop: var(--c-red);
+    --c-pop-soft: var(--c-ember);
+    --c-pop-text: 255 255 255;
+    --orbit-opacity: 0.45;
+  }
+  :root:not([data-theme]),
+  [data-theme='mono'] {
+    --c-pop: 255 200 61;
+    --c-pop-soft: 255 225 140;
+    --c-pop-text: 255 211 92;
+    /* Thin yellow lines read as grey when faint, so White draws its orbits stronger */
+    --orbit-opacity: 0.85;
   }
   html,
   body {
@@ -126,6 +144,11 @@
     opacity: 1;
     filter: brightness(0) invert(46%) sepia(89%) saturate(2700%) hue-rotate(201deg) brightness(101%)
       drop-shadow(0 0 4px rgb(var(--c-signal) / 0.9));
+  }
+  /* Section titles ("(08) Contact", "Toolkit"…): the usual soft white, warm yellow in White */
+  :root:not([data-theme]) .section-title,
+  [data-theme='mono'] .section-title {
+    color: rgb(var(--c-pop));
   }
   .text-glow {
     text-shadow: 0 0 40px rgb(var(--c-red) / 0.45), 0 0 2px rgb(255 255 255 / 0.4);
