@@ -55,9 +55,10 @@ function routeForScroll(y: number) {
   return 1
 }
 
-// Spread onto an <a> so off-site links (WhatsApp, the résumé PDF) open in a new tab.
+// Spread onto an <a> so off-site links (WhatsApp) and the résumé PDF open in a new tab. The PDF
+// is hosted here, so it is matched by extension; its own Portfolio link then can't replace the site.
 export const externalProps = (href: string) =>
-  href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}
+  href.startsWith('http') || href.endsWith('.pdf') ? { target: '_blank', rel: 'noopener noreferrer' } : {}
 
 export function scrollToHash(href: string) {
   if (motion.lenis) motion.lenis.scrollTo(href, { duration: 1.6 })

@@ -110,9 +110,6 @@ export function Nav() {
           <span className="font-display text-sm font-extrabold tracking-[0.35em] text-white transition group-hover:text-glow">
             {site.wordmark}
           </span>
-          <span className="hidden font-grotesk text-xs uppercase tracking-[0.25em] text-white/50 2xl:inline">
-            {site.name}
-          </span>
         </a>
 
         <div className="flex items-center gap-2">
