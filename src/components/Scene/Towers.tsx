@@ -34,7 +34,8 @@ export function Towers({ panels }: { panels: Panel[] }) {
       const fx = p.d / 2 + 0.01
       const strips: [number, number, number, number, number, number][] = [
         [fx, p.h / 2, -p.w / 2, 0.035, p.h, 0.035],
-        [fx, p.h / 2, p.w / 2, 0.035, p.h, 0.035],
+        // Far edge, collapsed to nothing where the next panel's near edge already marks the seam
+        [fx, p.h / 2, p.w / 2, 0.035, p.farEdge === false ? 0 : p.h, 0.035],
         [fx, p.h, 0, 0.035, 0.035, p.w],
       ]
       strips.forEach(([x, y, z, sx, sy, sz], j) => {

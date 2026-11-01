@@ -56,6 +56,9 @@ export type Panel = {
   h: number
   d: number // thickness
   inner: boolean // faces the corridor (gets edge strips and light traces)
+  // Lights its far edge too. Off where the next panel in the wall sits right beside it, whose own
+  // near-edge strip already marks the seam (two strips there read as a doubled line).
+  farEdge?: boolean
 }
 
 type Seg = { a: P2; b: P2 }
@@ -114,7 +117,7 @@ function lineWall(seg: Seg, inward: P2, rand: () => number, out: Panel[], hRange
     const d = WALL_THICKNESS
     const mid = s + w / 2
     const tall = rand() < 0.15
-    out.push({
+    const panel: Panel = {
       cx: ax + dir[0] * mid - inward[0] * (d / 2),
       cz: az + dir[1] * mid - inward[1] * (d / 2),
       yaw,
@@ -122,8 +125,11 @@ function lineWall(seg: Seg, inward: P2, rand: () => number, out: Panel[], hRange
       h: tall ? hRange[1] + 3 + rand() * 4 : hRange[0] + rand() * (hRange[1] - hRange[0]),
       d,
       inner: true,
-    })
-    s += w + (rand() < 0.2 ? 0.25 + rand() * 0.5 : 0.04)
+    }
+    out.push(panel)
+    const gap = rand() < 0.2 ? 0.25 + rand() * 0.5 : 0.04
+    s += w + gap
+    panel.farEdge = gap > 0.1 || s >= total - 0.2
   }
 }
 

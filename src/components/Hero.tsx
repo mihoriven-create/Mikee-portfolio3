@@ -95,8 +95,8 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
     <section id="top" ref={root} className="relative flex min-h-[100svh] flex-col">
       <div
         data-hero-inner
-        // Same width and side padding as the nav, so the corners line up with its edges
-        className="relative mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col items-center px-4 pb-8 pt-24 sm:px-8 sm:pb-10 xl:pt-28"
+        // Full screen width: the corner details sit right at the screen edges
+        className="relative flex min-h-[100svh] w-full flex-col items-center px-4 pb-5 pt-24 sm:px-6 sm:pb-6 xl:pt-28"
       >
         {/* Soft scrim behind the name and orb; the screen edges stay clear */}
         <div
@@ -138,10 +138,11 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
           <OrbButton reducedMotion={reducedMotion} />
         </div>
 
-        {/* Bottom corners: pitch and scroll cue on the left, actions on the right */}
-        <div className="relative z-10 mt-4 flex w-full flex-col gap-6 sm:gap-8 xl:mt-0 xl:flex-row xl:items-end xl:justify-between">
+        {/* Bottom edge: pitch and scroll cue in the left corner, the main action centred, and the
+            other two actions in the right corner */}
+        <div className="relative z-10 mt-4 flex w-full flex-col gap-6 sm:gap-8 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-end xl:mt-0">
           {/* data-orb-clear: the travelling orb waits until this has scrolled away */}
-          <div data-hero-fade data-orb-clear className="max-w-[22rem]">
+          <div data-hero-fade data-orb-clear className="max-w-[22rem] lg:justify-self-start">
             <p className="text-sm leading-relaxed text-white/70">{site.hero.description}</p>
             <a
               href="#approach"
@@ -155,7 +156,7 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
             </a>
           </div>
 
-          <div data-hero-fade className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap xl:w-auto xl:justify-end">
+          <div data-hero-fade className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:justify-self-center">
             <a
               href={site.hero.primary.href}
               onClick={(e) => {
@@ -166,6 +167,9 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
             >
               {site.hero.primary.label} <ArrowDown size={14} aria-hidden />
             </a>
+          </div>
+
+          <div data-hero-fade className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap lg:justify-end lg:justify-self-end">
             <a
               href={site.hero.secondary.href}
               onClick={(e) => {

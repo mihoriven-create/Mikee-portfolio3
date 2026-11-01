@@ -105,9 +105,17 @@ function StoryTabs({ c }: { c: CaseStudy }) {
       })
     }
     place(!first.current)
+    // Watch every tab, not just the row: when the web fonts arrive the tabs change width while the
+    // row can keep its size, which left the indicator stranded past the selected tab.
     const ro = new ResizeObserver(() => place(false))
     if (list.current) ro.observe(list.current)
-    return () => ro.disconnect()
+    Object.values(buttons.current).forEach((b) => b && ro.observe(b))
+    let live = true
+    document.fonts?.ready.then(() => live && place(false))
+    return () => {
+      live = false
+      ro.disconnect()
+    }
   }, [active])
 
   // Incoming content: slide in from the right and fade up (slightly slower than the exit)
