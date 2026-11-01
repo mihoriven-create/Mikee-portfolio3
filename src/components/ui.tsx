@@ -37,7 +37,9 @@ export function SectionHeader({
           ))}
         </h2>
       )}
-      {intro && <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">{intro}</p>}
+      {intro && (
+        <p className={`mt-5 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg ${center ? 'mx-auto text-balance' : ''}`}>{intro}</p>
+      )}
     </div>
   )
 }

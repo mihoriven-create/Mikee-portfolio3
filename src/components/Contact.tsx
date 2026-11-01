@@ -217,7 +217,7 @@ export function Contact() {
     <section id="contact" className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col px-4 pt-24 sm:px-8">
       {/* Headline and buttons centred in the screen, footer at the bottom */}
       <div className="flex flex-1 flex-col items-center justify-center">
-        <SectionHeader index="08" label={site.contact.label} headline={site.contact.headline} center />
+        <SectionHeader index="08" label={site.contact.label} headline={site.contact.headline} intro={site.contact.intro} center />
 
         {/* No scroll reveal here: this is the last screen, so an exit animation would hide the buttons */}
         <ul className="mt-10 grid w-full max-w-3xl grid-cols-3 gap-3">

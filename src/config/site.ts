@@ -590,8 +590,9 @@ export const site = {
   contact: {
     label: 'Contact',
     headline: ["Let's build", 'better systems.'],
+    intro: 'Need help with CRM management workflow, AI implementation, or backend operations?',
     form: {
-      intro: 'Need help with CRM management workflow, AI implementation, or backend operations?',
+      intro: 'Tell me a little about what you need and it goes straight to my inbox.',
       subject: 'New inquiry from your website',
       // Messages are delivered by FormSubmit (formsubmit.co), no account needed. The very first message
       // sends you an activation email; click it once and every message after that arrives directly.
