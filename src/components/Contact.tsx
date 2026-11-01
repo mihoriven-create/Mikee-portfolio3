@@ -9,14 +9,14 @@ const inputClass =
   'mt-2 w-full rounded-lg border border-white/10 bg-black/50 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-red/70 focus:shadow-glow'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error' | 'activation'
-const EMPTY = { firstName: '', lastName: '', email: '', message: '' }
+const EMPTY = { firstName: '', lastName: '', company: '', email: '', message: '' }
 
 // Builds a ready-to-send email with the visitor's message, used when the form can't deliver it
 const mailtoFor = (form: typeof EMPTY) =>
   `mailto:${site.email}?subject=${encodeURIComponent(site.contact.form.subject)}&body=${encodeURIComponent(
     `${form.message}
 
-— ${`${form.firstName} ${form.lastName}`.trim()} (${form.email})`,
+— ${`${form.firstName} ${form.lastName}`.trim()}${form.company ? `, ${form.company}` : ''} (${form.email})`,
   )}`
 
 // Sends the message straight to the inbox through FormSubmit; no email app opens. Gives up after
@@ -30,6 +30,7 @@ async function deliver(form: typeof EMPTY): Promise<'sent' | 'activation'> {
       name: `${form.firstName} ${form.lastName}`.trim(),
       first_name: form.firstName,
       last_name: form.lastName,
+      company: form.company,
       email: form.email,
       message: form.message,
       _subject: site.contact.form.subject,
@@ -46,7 +47,7 @@ async function deliver(form: typeof EMPTY): Promise<'sent' | 'activation'> {
 }
 
 function MessageForm({ firstFieldRef }: { firstFieldRef: React.RefObject<HTMLInputElement> }) {
-  const ids = { first: useId(), last: useId(), email: useId(), message: useId() }
+  const ids = { first: useId(), last: useId(), company: useId(), email: useId(), message: useId() }
   const [form, setForm] = useState(EMPTY)
   const [status, setStatus] = useState<Status>('idle')
   const [sentFrom, setSentFrom] = useState(EMPTY) // the message that failed, kept for the email fallback
@@ -98,11 +99,19 @@ function MessageForm({ firstFieldRef }: { firstFieldRef: React.RefObject<HTMLInp
           <input id={ids.last} required autoComplete="family-name" value={form.lastName} onChange={set('lastName')} className={inputClass} />
         </div>
       </div>
-      <div>
-        <label htmlFor={ids.email} className="label text-[10px]">
-          Email
-        </label>
-        <input id={ids.email} type="email" required autoComplete="email" value={form.email} onChange={set('email')} className={inputClass} />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label htmlFor={ids.company} className="label text-[10px]">
+            Company <span className="normal-case tracking-normal text-white/40">(optional)</span>
+          </label>
+          <input id={ids.company} autoComplete="organization" value={form.company} onChange={set('company')} className={inputClass} />
+        </div>
+        <div>
+          <label htmlFor={ids.email} className="label text-[10px]">
+            Email
+          </label>
+          <input id={ids.email} type="email" required autoComplete="email" value={form.email} onChange={set('email')} className={inputClass} />
+        </div>
       </div>
       <div>
         <label htmlFor={ids.message} className="label text-[10px]">
