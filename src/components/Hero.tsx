@@ -162,7 +162,7 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
                 e.preventDefault()
                 scrollToHash(site.hero.primary.href)
               }}
-              className={`${pill} bg-gradient-to-b from-[rgb(var(--c-tint))] via-red to-red text-white shadow-[0_0_24px_-6px_rgb(var(--c-red)/0.85)] [text-shadow:0_1px_2px_rgb(0_0_0/0.45)] hover:shadow-[0_0_36px_-6px_rgb(var(--c-ember)/0.85)]`}
+              className={`${pill} bg-gradient-to-b from-[rgb(var(--c-tint))] via-red to-red text-on-accent shadow-[0_0_24px_-6px_rgb(var(--c-red)/0.85)] [text-shadow:0_1px_2px_rgb(0_0_0/0.45)] hover:shadow-[0_0_36px_-6px_rgb(var(--c-ember)/0.85)]`}
             >
               {site.hero.primary.label} <ArrowDown size={14} aria-hidden />
             </a>

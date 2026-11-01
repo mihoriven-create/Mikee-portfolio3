@@ -1,10 +1,12 @@
 // Colour themes. Each one sets the accent variables defined in index.css; the choice is remembered
 // in this browser and applied before first paint by the small script in index.html.
 export const THEMES = [
+  { id: 'mono', label: 'White', swatch: '#f2f2f2' },
   { id: 'crimson', label: 'Crimson', swatch: '#ff2a1f' },
   { id: 'cobalt', label: 'Cobalt', swatch: '#2f8bff' },
   { id: 'emerald', label: 'Emerald', swatch: '#10be6e' },
   { id: 'violet', label: 'Violet', swatch: '#a050ff' },
+  { id: 'gold', label: 'Gold', swatch: '#e0b84a' },
 ] as const
 
 export type ThemeId = (typeof THEMES)[number]['id']
@@ -15,7 +17,7 @@ export const THEME_CHANGE = 'mjb-theme-change'
 
 export function getTheme(): ThemeId {
   const current = document.documentElement.dataset.theme
-  return THEMES.some((t) => t.id === current) ? (current as ThemeId) : 'crimson'
+  return THEMES.some((t) => t.id === current) ? (current as ThemeId) : 'mono'
 }
 
 export const themeLabel = (id: ThemeId) => THEMES.find((t) => t.id === id)!.label

@@ -122,7 +122,7 @@ function MessageForm({ firstFieldRef }: { firstFieldRef: React.RefObject<HTMLInp
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="inline-flex items-center gap-2 rounded-full bg-red px-8 py-3.5 font-grotesk text-xs font-semibold uppercase tracking-[0.22em] text-white shadow-[0_0_24px_-8px_rgb(var(--c-red)/0.85)] transition duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
+          className="inline-flex items-center gap-2 rounded-full bg-red px-8 py-3.5 font-grotesk text-xs font-semibold uppercase tracking-[0.22em] text-on-accent shadow-[0_0_24px_-8px_rgb(var(--c-red)/0.85)] transition duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
         >
           {status === 'sending' ? <Loader2 size={15} className="animate-spin" aria-hidden /> : <Send size={15} aria-hidden />}
           {status === 'sending' ? 'Sending…' : 'Send Message'}
@@ -149,7 +149,7 @@ function MessageForm({ firstFieldRef }: { firstFieldRef: React.RefObject<HTMLInp
 const cardClass =
   'group flex h-full w-full flex-col items-center gap-3 rounded-2xl border border-red/70 bg-red/[0.14] p-4 text-center shadow-[0_0_26px_-8px_rgb(var(--c-red)/0.6),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-red hover:bg-red/25 hover:shadow-[0_0_38px_-6px_rgb(var(--c-red)/0.8)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:flex-row sm:items-center sm:gap-4 sm:p-5 sm:text-left'
 const iconClass =
-  'grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-red/60 bg-red/20 text-white transition group-hover:bg-red'
+  'grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-red/60 bg-red/20 text-white transition group-hover:bg-red group-hover:text-on-accent'
 
 // The "Email me" pop-up that holds the message form. Esc or the backdrop closes it.
 function EmailMeDialog({ onClose }: { onClose: () => void }) {

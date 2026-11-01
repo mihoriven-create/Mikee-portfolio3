@@ -4,8 +4,21 @@
 
 @layer base {
   /* Colour themes, picked with the palette button in the nav (see lib/theme.ts). Channels are
-     "R G B" so Tailwind can add opacity. --scene-filter recolours the 3D maze to match. */
+     "R G B" so Tailwind can add opacity. --scene-filter recolours the 3D maze to match. White
+     (mono) is the default, used until a visitor picks another. */
+  /* White comes first: :root matches whatever theme is set, so every theme below must override it.
+     White and Gold are light, so text on solid accent is dark there (--c-on-accent). */
   :root,
+  [data-theme='mono'] {
+    --c-red: 236 236 236;
+    --c-ember: 255 255 255;
+    --c-blood: 96 96 96;
+    --c-tint: 255 255 255;
+    --c-signal: 255 255 255;
+    --c-signal-soft: 225 225 225;
+    --c-on-accent: 10 10 10;
+    --scene-filter: grayscale(1) brightness(1.15);
+  }
   [data-theme='crimson'] {
     --c-red: 255 42 31;
     --c-ember: 255 106 0;
@@ -13,6 +26,7 @@
     --c-tint: 255 211 205;
     --c-signal: 47 139 255;
     --c-signal-soft: 140 196 255;
+    --c-on-accent: 255 255 255;
     --scene-filter: none;
   }
   [data-theme='cobalt'] {
@@ -22,6 +36,7 @@
     --c-tint: 205 225 255;
     --c-signal: 255 176 32;
     --c-signal-soft: 255 214 140;
+    --c-on-accent: 255 255 255;
     --scene-filter: hue-rotate(215deg) saturate(1.15);
   }
   [data-theme='emerald'] {
@@ -31,6 +46,7 @@
     --c-tint: 205 255 228;
     --c-signal: 47 139 255;
     --c-signal-soft: 140 196 255;
+    --c-on-accent: 255 255 255;
     --scene-filter: hue-rotate(145deg);
   }
   [data-theme='violet'] {
@@ -40,7 +56,18 @@
     --c-tint: 232 214 255;
     --c-signal: 0 214 255;
     --c-signal-soft: 150 236 255;
+    --c-on-accent: 255 255 255;
     --scene-filter: hue-rotate(268deg) saturate(1.1);
+  }
+  [data-theme='gold'] {
+    --c-red: 224 184 74;
+    --c-ember: 255 214 120;
+    --c-blood: 122 86 18;
+    --c-tint: 255 238 196;
+    --c-signal: 255 244 214;
+    --c-signal-soft: 255 232 176;
+    --c-on-accent: 18 12 2;
+    --scene-filter: grayscale(1) sepia(1) saturate(2.4) brightness(1.05);
   }
   html,
   body {

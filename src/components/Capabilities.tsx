@@ -50,7 +50,7 @@ export function Capabilities() {
               </span>
               <span
                 aria-hidden
-                className="grid h-8 w-8 place-items-center rounded-full border border-red/40 text-red transition group-open:rotate-45 group-open:bg-red group-open:text-white"
+                className="grid h-8 w-8 place-items-center rounded-full border border-red/40 text-red transition group-open:rotate-45 group-open:bg-red group-open:text-on-accent"
               >
                 +
               </span>
@@ -118,7 +118,7 @@ export function Capabilities() {
                     className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-red/70 to-transparent opacity-50 transition group-hover:opacity-100"
                   />
                   <div className="flex items-center gap-3">
-                    <span className="grid h-9 w-9 place-items-center rounded-xl border border-red/40 bg-red/[0.08] text-red transition group-hover:bg-red group-hover:text-white">
+                    <span className="grid h-9 w-9 place-items-center rounded-xl border border-red/40 bg-red/[0.08] text-red transition group-hover:bg-red group-hover:text-on-accent">
                       <Icon size={16} aria-hidden />
                     </span>
                     <p className="label flex-1 text-[10px] text-white/85">{group.group}</p>

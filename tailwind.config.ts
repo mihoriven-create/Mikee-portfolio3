@@ -12,6 +12,8 @@ export default {
         ember: 'rgb(var(--c-ember) / <alpha-value>)',
         blood: 'rgb(var(--c-blood) / <alpha-value>)',
         signal: 'rgb(var(--c-signal) / <alpha-value>)',
+        // Text on a solid accent background: white, or near-black for the light accents
+        'on-accent': 'rgb(var(--c-on-accent) / <alpha-value>)',
       },
       fontFamily: {
         display: ['Orbitron', 'sans-serif'],
