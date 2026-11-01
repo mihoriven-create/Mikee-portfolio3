@@ -9,6 +9,7 @@ import {
   Calculator,
   Handshake,
   Lightbulb,
+  Megaphone,
   Route,
   ServerCog,
   Sheet,
@@ -31,6 +32,7 @@ const CASE_ICONS: Record<string, LucideIcon> = {
   'case-04': Sheet,
   'case-05': Calculator,
   'case-06': ServerCog,
+  'case-07': Megaphone,
 }
 
 // A labelled block inside a case study, always visible.

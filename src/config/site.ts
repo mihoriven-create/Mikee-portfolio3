@@ -85,7 +85,7 @@ export const site = {
   work: {
     label: 'Selected work',
     intro:
-      'Six highlights from around 30 case studies in live CRM, automation and integration work. Screenshots are from the real systems with contact details blurred; anything illustrative is labelled as such.',
+      'Seven highlights from around 30 case studies in live CRM, automation and integration work. Screenshots are from the real systems with contact details blurred; anything illustrative is labelled as such.',
     cases: [
       {
         id: 'case-01',
@@ -274,6 +274,51 @@ export const site = {
         implementation:
           'Root-cause analysis across CRMs, APIs, webhooks, and PDF workflows; Microsoft 365 and Outlook administration; Adobe Acrobat Sign fillable forms and e-signature workflows; backend support for One Finance Source, Term Loan Solution, and Alliance Capital Enterprises Inc.',
         outcome: 'Reliable systems that reduce manual work and keep funding workflows and daily operations running.',
+      },
+      {
+        // Worded only from Mikee's workflow screenshots and the HELOC line on his résumé; no results claimed.
+        id: 'case-07',
+        category: 'Campaign automation',
+        status: 'Built',
+        title: 'HELOC Drip Campaign',
+        summary:
+          'A five-offer HELOC campaign for a list of about 14,000 leads: an MMS and SMS drip over 21 days, intake landing pages, and workflows for form submissions and opt-outs.',
+        role: 'Campaign workflow design & build',
+        context: 'American Financial Services, LLC',
+        builtWith: ['GoHighLevel', 'MMS & SMS', 'Trigger links', 'Landing pages', 'Jotform', 'Slack'],
+        flowLabel: 'The drip, per offer',
+        flow: [
+          { title: 'Day 1', detail: 'Initial message' },
+          { title: 'Day 3', detail: 'Reminder with the offer’s MMS image' },
+          { title: 'Day 5', detail: 'Follow-up' },
+          { title: 'Day 7', detail: 'Final follow-up' },
+          { title: 'Day 21', detail: 'Check-in' },
+        ],
+        flowNote:
+          'Five offers run in parallel: Your Home Has Been Saving, Unlock Equity in a Flash, Introducing the 5-Day HELOC, Same Mortgage. New Money., and Keep the 3% Interest Rate You Worked For.',
+        shots: [
+          {
+            src: `${MEDIA}/work/heloc-drip-campaign.webp`,
+            caption:
+              'HELOC drip campaign workflow: five offer tracks with their landing pages, MMS graphics and Day 1–21 messages',
+          },
+          {
+            src: `${MEDIA}/work/heloc-intake-form-received.webp`,
+            caption: 'Intake form received: tag, remove from the drip, internal notification and Slack alert',
+          },
+          {
+            src: `${MEDIA}/work/heloc-unsubscribe.webp`,
+            caption: 'Unsubscribe workflow: an unsubscribe link click or a STOP reply removes the lead from the outreach',
+          },
+        ],
+        challenge:
+          'A large lead list needed a HELOC outreach that presented several offers, followed up on a schedule, and stopped messaging as soon as a lead applied or opted out.',
+        solution:
+          'A GoHighLevel drip with five offer tracks, each with its own landing page and MMS graphic, plus separate workflows for intake form submissions and unsubscribes. A matching HTML email campaign used the Project HELOC graphics.',
+        implementation:
+          'Trigger links per offer, Day 1, 3, 5, 7 and 21 messages with STOP opt-out wording, a Jotform intake form, a no-response branch, an intake workflow that tags the lead, removes it from the drip and alerts the team in Slack, and an unsubscribe workflow driven by link clicks and STOP replies.',
+        outcome:
+          'Each lead gets the same scheduled sequence for its offer, and leads who submit the intake form or opt out are taken out of the outreach automatically.',
       },
     ] satisfies CaseStudy[],
 
@@ -488,6 +533,7 @@ export const site = {
       period: 'Feb 2024 — May 2025',
       role: 'Executive Assistant to CEO',
       org: 'One Virtual Desk',
+      logo: `${MEDIA}/logos/one-virtual-desk.png`,
       bullets: [
         'Supported executive operations, project coordination, and business processes across multiple departments.',
         'Built and managed GoHighLevel workflows, CRM automations, lead capture systems, and follow-up campaigns.',
