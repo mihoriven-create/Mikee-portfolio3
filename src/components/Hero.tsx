@@ -42,11 +42,11 @@ function OrbButton({ reducedMotion }: { reducedMotion: boolean }) {
       {/* The note: beside the orb on wide screens, under it on small ones */}
       <p
         data-hero-fade
-        className="label pointer-events-none mt-1 flex items-center justify-center gap-2 text-center text-[10px] text-white/65 xl:absolute xl:left-[92%] xl:top-1/2 xl:mt-0 xl:w-48 xl:-translate-y-1/2 xl:justify-start xl:text-left"
+        className="label pointer-events-none mt-1 flex items-center justify-center gap-2 text-center text-[10px] text-white/65 xl:absolute xl:left-[92%] xl:top-1/2 xl:mt-0 xl:w-72 xl:-translate-y-1/2 xl:justify-start xl:text-left"
       >
         <span aria-hidden className="hidden h-px w-8 shrink-0 bg-gradient-to-r from-transparent to-red xl:block" />
         <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-red shadow-[0_0_8px_rgb(var(--c-red)/0.9)]" />
-        Click the orb to change the color theme
+        For the best experience, click me to switch themes and find your favorite.
       </p>
     </div>
   )
