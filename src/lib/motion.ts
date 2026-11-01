@@ -13,6 +13,7 @@ export const motion = {
   mx: 0, // pointer, -1 → 1
   my: 0,
   lenis: null as Lenis | null,
+  navigating: false, // a nav link's smooth scroll is under way
 }
 
 // The page sections drive the walk through the maze: the hero and The Approach walk the first
@@ -61,8 +62,81 @@ export const externalProps = (href: string) =>
   href.startsWith('http') || href.endsWith('.pdf') ? { target: '_blank', rel: 'noopener noreferrer' } : {}
 
 export function scrollToHash(href: string) {
-  if (motion.lenis) motion.lenis.scrollTo(href, { duration: 1.6 })
-  else document.querySelector(href)?.scrollIntoView()
+  if (motion.lenis) {
+    motion.navigating = true
+    motion.lenis.scrollTo(href, { duration: 1.6, onComplete: () => (motion.navigating = false) })
+    // A wheel or touch can cut the scroll short, so onComplete may never run
+    window.setTimeout(() => (motion.navigating = false), 1800)
+  } else document.querySelector(href)?.scrollIntoView()
+}
+
+// Scrolling down into Contact glides the rest of the way to the bottom of the page, so the
+// contact options and footer land fully in view. It waits until the visitor pauses (never
+// fighting a wheel or a phone's momentum), runs once per visit (re-armed after scrolling back
+// up above Contact), and any wheel or touch during the glide takes over from where the page is.
+// Skipped for nav-link jumps, while a dialog is open, and with reduced motion (no Lenis).
+const SETTLE_MS = 220
+const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+
+export function useContactGlide(enabled: boolean) {
+  useEffect(() => {
+    if (!enabled) return
+    let pending = false
+    let gliding = false
+    let timer = 0
+
+    const glide = () => {
+      const lenis = motion.lenis
+      if (!pending || !lenis || motion.navigating || document.querySelector('[role="dialog"]')) return
+      const distance = lenis.limit - lenis.scroll
+      pending = false
+      if (distance < 4) return
+      gliding = true
+      lenis.scrollTo('bottom', {
+        duration: Math.min(1.6, Math.max(0.8, distance / 700)),
+        easing: ease,
+        onComplete: () => (gliding = false),
+      })
+    }
+
+    const trigger = ScrollTrigger.create({
+      trigger: '#contact',
+      start: 'top 65%',
+      end: 'max',
+      onEnter: () => {
+        pending = !motion.navigating
+      },
+      onLeaveBack: () => {
+        pending = false
+        clearTimeout(timer)
+        timer = 0
+      },
+    })
+
+    // Wait for the scroll to settle before gliding; the glide's own frames don't count, and neither
+    // does the smooth scroll's last slow creep of a pixel or two per frame
+    const off = motion.lenis?.on('scroll', (lenis: Lenis) => {
+      if (gliding || !pending) return
+      if (Math.abs(lenis.velocity) < 1.5 && timer) return
+      clearTimeout(timer)
+      timer = window.setTimeout(() => {
+        timer = 0
+        glide()
+      }, SETTLE_MS)
+    })
+    // Any wheel or touch ends the glide's claim, so a later pause can't restart it
+    const interrupt = () => (gliding = false)
+    window.addEventListener('wheel', interrupt, { passive: true })
+    window.addEventListener('touchstart', interrupt, { passive: true })
+
+    return () => {
+      trigger.kill()
+      off?.()
+      clearTimeout(timer)
+      window.removeEventListener('wheel', interrupt)
+      window.removeEventListener('touchstart', interrupt)
+    }
+  }, [enabled])
 }
 
 export function useSmoothScroll(enabled: boolean) {

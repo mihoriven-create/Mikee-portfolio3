@@ -13,7 +13,7 @@ import { Nav } from './components/Nav'
 import { Organizations } from './components/Organizations'
 import { Work } from './components/Work'
 import { WorkflowSignal } from './components/WorkflowSignal'
-import { useReveal, useSmoothScroll } from './lib/motion'
+import { useContactGlide, useReveal, useSmoothScroll } from './lib/motion'
 import { useMediaQuery } from './lib/useMediaQuery'
 
 const Scene = lazy(() => import('./components/Scene/Scene'))
@@ -27,6 +27,7 @@ export default function App() {
 
   useSmoothScroll(!reducedMotion)
   useReveal(!reducedMotion)
+  useContactGlide(!reducedMotion)
 
   // Expanding details, tabs or the contact form changes the page height; re-measure scroll positions.
   useEffect(() => {
