@@ -12,6 +12,7 @@ import { Loader } from './components/Loader'
 import { Nav } from './components/Nav'
 import { Organizations } from './components/Organizations'
 import { Work } from './components/Work'
+import { Weather } from './components/Weather'
 import { WorkflowSignal } from './components/WorkflowSignal'
 import { useContactGlide, useReveal, useSmoothScroll } from './lib/motion'
 import { useMediaQuery } from './lib/useMediaQuery'
@@ -57,6 +58,8 @@ export default function App() {
           <Scene mobile={mobile} reducedMotion={reducedMotion} onReady={onReady} />
         </Suspense>
       </div>
+      {/* Seasonal weather over the maze and under the content; works with every colour theme */}
+      <Weather reducedMotion={reducedMotion} />
 
       <Nav />
 

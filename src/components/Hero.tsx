@@ -5,6 +5,7 @@ import { ArrowDown, FileDown, MessageSquare } from 'lucide-react'
 import { site } from '../config/site'
 import { externalProps, openContactForm, scrollToHash } from '../lib/motion'
 import { THEME_CHANGE, getTheme, nextTheme, setTheme, themeLabel } from '../lib/theme'
+import { WEATHER_CHANGE, getSeason, nextSeason, seasonIcon, seasonLabel, setSeason } from '../lib/weather'
 
 const HeroOrb = lazy(() => import('./HeroOrb'))
 
@@ -48,6 +49,43 @@ function OrbButton({ reducedMotion }: { reducedMotion: boolean }) {
         <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-red shadow-[0_0_8px_rgb(var(--c-red)/0.9)]" />
         For the best experience, click me to switch themes and find your favorite.
       </p>
+
+      <SeasonButton />
+    </div>
+  )
+}
+
+// The weather switch: beside the orb on its left on wide screens, under the orb's note on small
+// ones. Each click moves to the next season (and round to off); it works with every colour theme.
+function SeasonButton() {
+  const [season, setCurrent] = useState(getSeason)
+  useEffect(() => {
+    const sync = () => setCurrent(getSeason())
+    window.addEventListener(WEATHER_CHANGE, sync)
+    return () => window.removeEventListener(WEATHER_CHANGE, sync)
+  }, [])
+  const next = nextSeason()
+  const Icon = seasonIcon(season)
+
+  return (
+    <div
+      data-hero-fade
+      className="mt-4 flex items-center gap-3 xl:absolute xl:right-[92%] xl:top-1/2 xl:mt-0 xl:-translate-y-1/2"
+    >
+      <div className="flex flex-col items-center xl:items-end">
+        <button
+          type="button"
+          onClick={() => setSeason(next)}
+          aria-label={`Change the weather. Current: ${seasonLabel(season)}. Next: ${seasonLabel(next)}.`}
+          title={`Switch to ${seasonLabel(next)}`}
+          className="glass-pill inline-flex items-center gap-2 whitespace-nowrap px-4 py-2 font-grotesk text-[11px] font-semibold uppercase tracking-[0.2em] text-white"
+        >
+          <Icon size={14} aria-hidden className="text-pop" />
+          {seasonLabel(season)}
+        </button>
+        <p className="label mt-2 whitespace-nowrap text-[9px] text-white/50">Click to change the season</p>
+      </div>
+      <span aria-hidden className="hidden h-px w-8 shrink-0 bg-gradient-to-r from-red to-transparent xl:block" />
     </div>
   )
 }

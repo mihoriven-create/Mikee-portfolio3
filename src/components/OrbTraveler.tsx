@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Orb } from './HeroOrb'
 import { THEME_CHANGE, getTheme, nextTheme, setTheme, themeLabel } from '../lib/theme'
+import { WEATHER_CHANGE, getSeason, nextSeason, seasonIcon, seasonLabel, setSeason } from '../lib/weather'
 
 // The orb that travels with the page after the hero. It fades in beside "Leads arrive from forms…",
 // then sits in the left or right margin, switching sides at each section (left, right, left…), and
@@ -10,7 +11,7 @@ import { THEME_CHANGE, getTheme, nextTheme, setTheme, themeLabel } from '../lib/
 // To switch sides it slides out past its own screen edge and back in from the other one, so it never
 // crosses the content in the middle. Visitors can drag it anywhere; it stays where it is dropped
 // until they scroll again, then returns to its section's side. A click without a drag changes the
-// colour theme, like the hero orb.
+// colour theme, like the hero orb. A small weather button rides just under it, wherever it goes.
 //
 // The canvas box never changes size (the 3D scene scales the orb instead), which keeps it from
 // shrinking or drifting when the browser re-measures.
@@ -30,10 +31,12 @@ type Point = { x: number; y: number }
 export default function OrbTraveler({ reducedMotion }: { reducedMotion: boolean }) {
   const box = useRef<HTMLDivElement>(null)
   const hit = useRef<HTMLButtonElement>(null)
+  const weather = useRef<HTMLButtonElement>(null)
   const size = useRef(0.5)
   const hovered = useRef(false)
   const [visible, setVisible] = useState(false)
   const [theme, setThemeState] = useState(getTheme)
+  const [season, setSeasonState] = useState(getSeason)
 
   // Where the orb is drawn this frame, its diameter, and drag state shared with the pointer handlers
   const current = useRef<Point & { d: number }>({ x: 0, y: 0, d: 0 })
@@ -44,8 +47,13 @@ export default function OrbTraveler({ reducedMotion }: { reducedMotion: boolean 
 
   useEffect(() => {
     const sync = () => setThemeState(getTheme())
+    const syncSeason = () => setSeasonState(getSeason())
     window.addEventListener(THEME_CHANGE, sync)
-    return () => window.removeEventListener(THEME_CHANGE, sync)
+    window.addEventListener(WEATHER_CHANGE, syncSeason)
+    return () => {
+      window.removeEventListener(THEME_CHANGE, sync)
+      window.removeEventListener(WEATHER_CHANGE, syncSeason)
+    }
   }, [])
 
   useEffect(() => {
@@ -171,6 +179,8 @@ export default function OrbTraveler({ reducedMotion }: { reducedMotion: boolean 
       el.style.opacity = opacity.toFixed(3)
       size.current = (diameter / (BOX * 0.9)) * grow
       button.style.width = button.style.height = `${diameter * 0.8}px`
+      // The weather button sits just below the orb's lowest orbit, whatever size the orb is
+      if (weather.current) weather.current.style.transform = `translate(-50%, ${diameter * 0.46 + 6}px)`
 
       const nowShown = opacity > 0.05
       if (nowShown !== shown) {
@@ -221,6 +231,8 @@ export default function OrbTraveler({ reducedMotion }: { reducedMotion: boolean 
   }
 
   const next = themeLabel(nextTheme())
+  const nextWeather = seasonLabel(nextSeason())
+  const WeatherIcon = seasonIcon(season)
   return (
     <div
       ref={box}
@@ -261,6 +273,22 @@ export default function OrbTraveler({ reducedMotion }: { reducedMotion: boolean 
           visible ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
       />
+      {/* The weather switch, riding under the orb (positioned each frame above) */}
+      <button
+        ref={weather}
+        type="button"
+        tabIndex={visible ? 0 : -1}
+        aria-hidden={!visible}
+        onClick={() => setSeason(nextSeason())}
+        aria-label={`Change the weather. Current: ${seasonLabel(season)}. Next: ${nextWeather}.`}
+        title={`${seasonLabel(season)} · click for ${nextWeather}`}
+        // Colour transitions only: a transform transition would make it lag behind the orb
+        className={`absolute left-1/2 top-1/2 grid h-8 w-8 place-items-center rounded-full border border-red/40 bg-black/50 text-white backdrop-blur-md transition-colors duration-300 hover:border-red hover:bg-red/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red/70 ${
+          visible ? 'pointer-events-auto' : 'pointer-events-none'
+        }`}
+      >
+        <WeatherIcon size={14} aria-hidden className="text-pop" />
+      </button>
     </div>
   )
 }
