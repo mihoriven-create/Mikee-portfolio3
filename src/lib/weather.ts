@@ -1,4 +1,4 @@
-import { CloudOff, Flower2, Leaf, Snowflake, Sun } from 'lucide-react'
+import { CloudLightning, CloudOff, Flower2, Leaf, Snowflake, Sun } from 'lucide-react'
 
 // Seasonal weather, switched with the button beside the hero orb (and the one riding with the
 // travelling orb). It is a separate layer from the colour themes, so every season works with every
@@ -9,6 +9,7 @@ export const SEASONS = [
   { id: 'summer', label: 'Summer', icon: Sun },
   { id: 'autumn', label: 'Autumn', icon: Leaf },
   { id: 'winter', label: 'Winter', icon: Snowflake },
+  { id: 'storm', label: 'Rain & thunder', icon: CloudLightning },
 ] as const
 
 export type SeasonId = (typeof SEASONS)[number]['id']

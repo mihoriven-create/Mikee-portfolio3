@@ -500,7 +500,7 @@ export const site = {
         'Built and managed a call-center system and workflows for business-loan leads, including outreach calling, calendar scheduling, intake forms, and lead follow-up.',
         'Set up remote access from the Philippines for the team to use three physical office computers in Wisconsin.',
         'Helped teammates onboard to tools and provided ongoing setup and workflow assistance.',
-        'Built a HELOC campaign with MMS, intake landing pages, and a matching HTML email campaign featuring Project HELOC graphics.',
+        'Built a GoHighLevel HELOC drip campaign for about 14,000 leads: five MMS offers with landing pages, Day 1–21 follow-ups, Jotform intake with Slack alerts, automatic STOP/unsubscribe handling, and a matching HTML email campaign.',
         'Managed lead operations and CRM workflows, including Google Sheets lead tracking, lead handoffs, duplicate checks, and workflow troubleshooting.',
         'Configured proxy workflows using ProxyLab, Oxylab, and IPRoyal.',
       ],
