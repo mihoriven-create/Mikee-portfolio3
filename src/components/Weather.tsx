@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { WEATHER_CHANGE, getSeason, type SeasonId } from '../lib/weather'
+import { LIGHTNING, WEATHER_CHANGE, getSeason, type SeasonId } from '../lib/weather'
 
 // Seasonal weather drawn on one full-screen 2D canvas between the maze and the page content, so
 // text always sits on top of it: cherry petals in spring, warm sunlight and drifting light motes in
@@ -7,7 +7,7 @@ import { WEATHER_CHANGE, getSeason, type SeasonId } from '../lib/weather'
 // Decorative only (hidden from assistive tech), paused while the tab is hidden, and a still frame
 // (no lightning) for reduced-motion visitors.
 
-type Particle = {
+export type Particle = {
   x: number
   y: number
   vx: number
@@ -34,14 +34,14 @@ const PALETTE: Record<Season, string[]> = {
 }
 
 // Rain slants with one shared wind, so every drop falls at the same angle (to the left)
-const WIND = -0.12
+export const WIND = -0.12
 
 // A lightning strike: a bright flash, a weaker re-strike flicker, then a fade. Most strikes show a
 // forked bolt; the rest are sheet lightning lighting the sky from behind the clouds.
 type Strike = { at: number; bolt: { x: number; y: number }[][] | null; glowX: number }
 
 // Flash brightness for a strike `age` seconds old: two pulses, never more than 3 flashes a second
-function flashLevel(age: number) {
+export function flashLevel(age: number) {
   if (age < 0) return 0
   const first = age < 0.05 ? age / 0.05 : Math.exp(-(age - 0.05) / 0.08)
   const second = age < 0.17 ? 0 : 0.65 * Math.exp(-(age - 0.17) / 0.28)
@@ -73,8 +73,8 @@ function makeBolt(w: number, h: number) {
   return paths
 }
 
-const rand = (a: number, b: number) => a + Math.random() * (b - a)
-const pick = <T,>(list: T[]) => list[Math.floor(Math.random() * list.length)]
+export const rand = (a: number, b: number) => a + Math.random() * (b - a)
+export const pick = <T,>(list: T[]) => list[Math.floor(Math.random() * list.length)]
 
 function spawn(season: Season, w: number, h: number, anywhere: boolean): Particle {
   const p: Particle = {
@@ -134,7 +134,7 @@ function spawn(season: Season, w: number, h: number, anywhere: boolean): Particl
   return p
 }
 
-function drawPetal(ctx: CanvasRenderingContext2D, p: Particle) {
+export function drawPetal(ctx: CanvasRenderingContext2D, p: Particle) {
   ctx.save()
   ctx.translate(p.x, p.y)
   ctx.rotate(p.rot)
@@ -151,7 +151,7 @@ function drawPetal(ctx: CanvasRenderingContext2D, p: Particle) {
   ctx.restore()
 }
 
-function drawLeaf(ctx: CanvasRenderingContext2D, p: Particle) {
+export function drawLeaf(ctx: CanvasRenderingContext2D, p: Particle) {
   ctx.save()
   ctx.translate(p.x, p.y)
   ctx.rotate(p.rot)
@@ -195,7 +195,7 @@ function drawFlake(ctx: CanvasRenderingContext2D, p: Particle) {
 }
 
 // A raindrop as a short streak along its direction of travel
-function drawDrop(ctx: CanvasRenderingContext2D, p: Particle, boost: number) {
+export function drawDrop(ctx: CanvasRenderingContext2D, p: Particle, boost: number) {
   ctx.globalAlpha = Math.min(1, p.alpha * boost)
   ctx.strokeStyle = p.color
   ctx.lineWidth = p.size > 22 ? 1.3 : 0.9
@@ -298,6 +298,8 @@ export function Weather({ reducedMotion }: { reducedMotion: boolean }) {
       if (season === 'storm' && t >= nextStrike) {
         strike = { at: t, bolt: Math.random() < 0.65 ? makeBolt(w, h) : null, glowX: rand(0.15, 0.85) * w }
         nextStrike = t + rand(2, 5)
+        // The hero name lights up with the same flash
+        window.dispatchEvent(new Event(LIGHTNING))
       }
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]

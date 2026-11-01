@@ -6,6 +6,7 @@ import { site } from '../config/site'
 import { externalProps, openContactForm, scrollToHash } from '../lib/motion'
 import { THEME_CHANGE, getTheme, nextTheme, setTheme, themeLabel } from '../lib/theme'
 import { WEATHER_CHANGE, getSeason, nextSeason, seasonIcon, seasonLabel, setSeason } from '../lib/weather'
+import { NameWeather } from './NameWeather'
 
 const HeroOrb = lazy(() => import('./HeroOrb'))
 
@@ -153,7 +154,7 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
           <p data-hero-fade className="label mt-8 text-[10px] tracking-[0.45em] text-red sm:mt-10 sm:text-[11px] xl:mt-12">
             {site.role}
           </p>
-          <h1 className="mt-4 font-display font-black uppercase leading-[0.95] tracking-tight xl:mt-5">
+          <h1 className="relative mt-4 font-display font-black uppercase leading-[0.95] tracking-tight xl:mt-5">
             <span data-hero-mask className="block overflow-hidden pb-[0.04em]">
               <span data-hero-line className="block text-[clamp(1.7rem,4.6vw,4.6rem)] text-white">
                 {site.hero.headline[0]}
@@ -167,6 +168,7 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
                 {site.hero.headline[1]}
               </span>
             </span>
+            <NameWeather ready={ready} reducedMotion={reducedMotion} />
           </h1>
         </header>
 

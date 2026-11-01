@@ -17,6 +17,8 @@ export type SeasonId = (typeof SEASONS)[number]['id']
 const KEY = 'mjb-weather'
 // Fired on window whenever the season changes, so the button and the weather layer stay in step
 export const WEATHER_CHANGE = 'mjb-weather-change'
+// Fired on window at each lightning strike, so the hero name can flash with the sky
+export const LIGHTNING = 'mjb-lightning'
 
 let current: SeasonId = (() => {
   try {
