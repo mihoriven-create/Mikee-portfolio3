@@ -9,6 +9,7 @@ import { Experience } from './components/Experience'
 import { Feedback } from './components/Feedback'
 import { Hero } from './components/Hero'
 import { Loader } from './components/Loader'
+import { Cursor } from './components/Cursor'
 import { Nav } from './components/Nav'
 import { Organizations } from './components/Organizations'
 import { Work } from './components/Work'
@@ -52,6 +53,7 @@ export default function App() {
   return (
     <>
       <Loader ready={ready} />
+      <Cursor />
 
       <div className="fixed inset-0 z-0 [filter:var(--scene-filter)] [transition:filter_600ms_ease]" aria-hidden>
         <Suspense fallback={null}>

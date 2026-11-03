@@ -14,6 +14,42 @@ const LABEL: Record<Step, string> = {
   render: 'Rendering scene',
 }
 
+// "System initialising": segmented navy and cyan rings turning around a glowing central node.
+// Decorative (the status text below is what screen readers hear); with reduced motion the global
+// rule in index.css stops the spin and it shows as a still emblem.
+function SystemInit() {
+  return (
+    <svg viewBox="0 0 120 120" className="sys-init h-24 w-24" aria-hidden>
+      <defs>
+        <radialGradient id="sys-init-core">
+          <stop offset="0" stopColor="#ffffff" />
+          <stop offset="0.45" stopColor="#22e3ff" />
+          <stop offset="1" stopColor="#22e3ff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      {/* Thin outer arcs */}
+      <g className="sys-init-slow">
+        <circle cx="60" cy="60" r="56" fill="none" stroke="#22b8e0" strokeOpacity="0.7" strokeWidth="1.2" strokeDasharray="44 43.96" />
+      </g>
+      {/* The main ring: a navy track with cyan segments running round it */}
+      <circle cx="60" cy="60" r="46" fill="none" stroke="#123b73" strokeWidth="7" />
+      <g className="sys-init-spin">
+        <circle cx="60" cy="60" r="46" fill="none" stroke="#22e3ff" strokeWidth="7" strokeDasharray="56 88.5" />
+        <circle cx="60" cy="60" r="46" fill="none" stroke="#1d6fd1" strokeWidth="7" strokeDasharray="20 124.5" strokeDashoffset="-64" />
+      </g>
+      {/* Tick ring, turning the other way */}
+      <g className="sys-init-rev">
+        <circle cx="60" cy="60" r="36" fill="none" stroke="#22e3ff" strokeOpacity="0.6" strokeWidth="3.5" strokeDasharray="1.2 3.51" />
+      </g>
+      {/* Bracket ring and crosshair around the node */}
+      <circle cx="60" cy="60" r="21" fill="none" stroke="#1d6fd1" strokeWidth="3" strokeDasharray="26 7" transform="rotate(-45 60 60)" />
+      <path d="M60 31v8M60 81v8M31 60h8M81 60h8" stroke="#22e3ff" strokeOpacity="0.8" strokeWidth="1.2" strokeLinecap="round" />
+      <circle className="sys-init-pulse" cx="60" cy="60" r="12" fill="url(#sys-init-core)" />
+      <circle cx="60" cy="60" r="4.5" fill="#ffffff" />
+    </svg>
+  )
+}
+
 export function Loader({ ready }: { ready: boolean }) {
   const root = useRef<HTMLDivElement>(null)
   const [done, setDone] = useState<Record<Step, boolean>>({ page: false, fonts: false, scene: false, render: false })
@@ -54,10 +90,8 @@ export function Loader({ ready }: { ready: boolean }) {
 
   return (
     <div ref={root} className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-bg" role="status" aria-live="polite">
-      <div className="flex items-center gap-3">
-        <span className="h-2 w-2 rounded-full bg-red animate-pulse-dot" />
-        <span className="font-display text-sm font-extrabold tracking-[0.4em] text-white">{site.wordmark}</span>
-      </div>
+      <SystemInit />
+      <span className="mt-7 font-display text-sm font-extrabold tracking-[0.4em] text-white">{site.wordmark}</span>
       <div
         className="mt-8 h-px w-56 overflow-hidden bg-white/10"
         role="progressbar"

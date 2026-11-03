@@ -214,7 +214,7 @@ export function NameWeather({ ready, reducedMotion }: { ready: boolean; reducedM
       switch (season) {
         case 'winter': {
           const d = Math.random()
-          p.size = 1.1 + d * 1.8
+          p.size = 1.4 + d * 2.2
           p.vx = rand(-5, 8)
           p.vy = 16 + d * 26
           p.alpha = 0.45 + d * 0.5
@@ -241,7 +241,7 @@ export function NameWeather({ ready, reducedMotion }: { ready: boolean; reducedM
         case 'spring':
           // Blossoms and the odd fresh leaf blow past from the left
           p.color = Math.random() < 0.75 ? pick(PETAL) : pick(SPROUT)
-          p.size = rand(5, 8) * k
+          p.size = rand(6, 10) * k
           p.x = anywhere ? rand(textL - 60, textR + 60) : textL - rand(60, 140)
           p.y = rand(PAD_TOP * 0.3, H - PAD_BOTTOM)
           p.vx = rand(26, 52)
@@ -282,28 +282,29 @@ export function NameWeather({ ready, reducedMotion }: { ready: boolean; reducedM
         // Patchy caps of snow already lying on the letters
         const p1 = rand(0, 9)
         const p2 = rand(0, 9)
-        for (const l of ledges) l.snow = Math.max(0, Math.sin(l.x * 0.045 + p1) + Math.sin(l.x * 0.11 + p2) - 0.7) * 0.45 * l.max
-        motes = many(24, 8)
+        for (const l of ledges) l.snow = Math.max(0, Math.sin(l.x * 0.045 + p1) + Math.sin(l.x * 0.11 + p2) - 0.3) * 0.5 * l.max
+        motes = many(40, 12)
       } else if (season === 'storm') {
-        motes = many(50, 14)
-        for (let i = 0; i < 4; i++) {
+        motes = many(70, 18)
+        for (let i = 0; i < 8; i++) {
           const l = randomLedge()
           addBead(l.x + rand(0, COL), l.y + 3, false)
         }
       } else if (season === 'summer') {
         for (let i = 0; i < 4; i++) sweat()
       } else if (season === 'autumn') {
-        motes = many(5, 3)
-        // One leaf already caught on a letter
-        const l = randomLedge()
-        const p = motes[0]
-        p.x = l.x
-        p.y = l.y - p.size * 0.35
-        p.rot = 0
-        p.rest = rand(2, 4)
-        p.floor = l.y + 4
-      } else {
         motes = many(9, 5)
+        // A couple of leaves already caught on the letters
+        for (const p of motes.slice(0, 2)) {
+          const l = randomLedge()
+          p.x = l.x
+          p.y = l.y - p.size * 0.35
+          p.rot = 0
+          p.rest = rand(2, 4)
+          p.floor = l.y + 4
+        }
+      } else {
+        motes = many(16, 8)
       }
     }
 
@@ -323,7 +324,7 @@ export function NameWeather({ ready, reducedMotion }: { ready: boolean; reducedM
         l.snow = Math.min(l.max, l.snow + a)
         return i
       }
-      const a = 0.22 * ledges[hit].max
+      const a = 0.3 * ledges[hit].max
       add(hit, a)
       const l1 = add(ledges[hit].left, a * 0.7)
       if (l1 >= 0) add(ledges[l1].left, a * 0.35)
@@ -352,21 +353,21 @@ export function NameWeather({ ready, reducedMotion }: { ready: boolean; reducedM
         const hit = season === 'spring' ? -1 : crossed(p.x, Math.max(y0, p.floor), p.y)
         if (hit >= 0) {
           const l = ledges[hit]
-          if (season === 'winter' && Math.random() < 0.45) {
+          if (season === 'winter' && Math.random() < 0.6) {
             settle(hit)
             motes[i] = fresh(false)
             continue
           }
           if (season === 'storm') {
-            if (Math.random() < 0.5) {
+            if (Math.random() < 0.7) {
               for (let s = 0, n = 1 + Math.round(Math.random()); s < n; s++)
                 splashes.push({ x: p.x, y: l.y - 1, vx: rand(-45, 45), vy: rand(-110, -50), life: rand(0.18, 0.32) })
             }
-            if (Math.random() < 0.012 && beads.length < 14) addBead(l.x + rand(0, COL), l.y + 3, false)
+            if (Math.random() < 0.025 && beads.length < 20) addBead(l.x + rand(0, COL), l.y + 3, false)
             motes[i] = fresh(false)
             continue
           }
-          if (season === 'autumn' && Math.random() < 0.4) {
+          if (season === 'autumn' && Math.random() < 0.55) {
             p.rest = rand(1.5, 4.5)
             p.y = l.y - p.size * 0.35
             p.floor = l.y + 4
@@ -380,7 +381,7 @@ export function NameWeather({ ready, reducedMotion }: { ready: boolean; reducedM
       if (season === 'winter') for (const l of ledges) if (l.snow > 0) l.snow = Math.max(0, l.snow - dt * 0.004 * l.max)
 
       if (season === 'summer' && t >= nextSweat) {
-        if (beads.length < 9) sweat()
+        if (beads.length < 12) sweat()
         nextSweat = t + rand(0.5, 1.6)
       }
 
@@ -454,7 +455,7 @@ export function NameWeather({ ready, reducedMotion }: { ready: boolean; reducedM
       if (season === 'storm' && edges) {
         // Wet, glossy top edges; the letters catch each lightning strike
         flash = reducedMotion ? 0 : flashLevel(t - flashAt)
-        c.globalAlpha = 0.28 + 0.5 * flash
+        c.globalAlpha = 0.4 + 0.5 * flash
         c.drawImage(edges, 0, 0, W, H)
         if (flash > 0.01 && cool) {
           c.globalAlpha = 0.32 * flash

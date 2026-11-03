@@ -23,7 +23,7 @@ export type Particle = {
 type Season = Exclude<SeasonId, 'off'>
 
 // Particles per 1440×900 screen; smaller screens get proportionally fewer
-const DENSITY: Record<Season, number> = { spring: 42, summer: 46, autumn: 30, winter: 120, storm: 260 }
+const DENSITY: Record<Season, number> = { spring: 58, summer: 46, autumn: 40, winter: 190, storm: 260 }
 
 const PALETTE: Record<Season, string[]> = {
   spring: ['#ffc4dc', '#ffd9e8', '#fbe6ef', '#f7a8c8', '#ffffff'],
@@ -32,6 +32,11 @@ const PALETTE: Record<Season, string[]> = {
   winter: ['#ffffff', '#eef6ff', '#dbe9ff'],
   storm: ['#c9d6e8', '#b4c3d9', '#dfe8f5'],
 }
+
+// Below the hero (The Approach through Contact) only this share of the particles is drawn, on a
+// fainter canvas, so the weather stays a backdrop to the content
+const QUIET_SHARE = 0.4
+const QUIET_OPACITY = 0.55
 
 // Rain slants with one shared wind, so every drop falls at the same angle (to the left)
 export const WIND = -0.12
@@ -91,11 +96,11 @@ function spawn(season: Season, w: number, h: number, anywhere: boolean): Particl
   }
   switch (season) {
     case 'spring':
-      p.size = rand(7, 12)
+      p.size = rand(8, 14)
       p.vx = rand(14, 38)
       p.vy = rand(26, 52)
       p.spin = rand(-1.6, 1.6)
-      p.alpha = rand(0.65, 0.95)
+      p.alpha = rand(0.82, 1)
       break
     case 'summer':
       p.size = rand(1.6, 3.4)
@@ -105,18 +110,18 @@ function spawn(season: Season, w: number, h: number, anywhere: boolean): Particl
       p.alpha = rand(0.4, 0.9)
       break
     case 'autumn':
-      p.size = rand(12, 20)
+      p.size = rand(13, 22)
       p.vx = rand(-10, 28)
       p.vy = rand(38, 72)
       p.spin = rand(-2.4, 2.4)
-      p.alpha = rand(0.75, 0.95)
+      p.alpha = rand(0.88, 1)
       break
     case 'winter': {
       const depth = Math.random()
-      p.size = 1.4 + depth * 3
+      p.size = 1.5 + depth * 3.4
       p.vx = rand(-6, 10)
       p.vy = 22 + depth * 46
-      p.alpha = 0.35 + depth * 0.6
+      p.alpha = 0.45 + depth * 0.55
       break
     }
     case 'storm': {
@@ -187,6 +192,14 @@ function drawMote(ctx: CanvasRenderingContext2D, p: Particle, t: number) {
 }
 
 function drawFlake(ctx: CanvasRenderingContext2D, p: Particle) {
+  // Nearer, bigger flakes get a soft halo so the snowfall reads at a glance
+  if (p.size > 3.6) {
+    ctx.globalAlpha = p.alpha * 0.18
+    ctx.fillStyle = p.color
+    ctx.beginPath()
+    ctx.arc(p.x, p.y, p.size * 2.4, 0, Math.PI * 2)
+    ctx.fill()
+  }
   ctx.globalAlpha = p.alpha
   ctx.fillStyle = p.color
   ctx.beginPath()
@@ -271,6 +284,10 @@ export function Weather({ reducedMotion }: { reducedMotion: boolean }) {
     let swap = 0
     let strike: Strike | null = null
     let nextStrike = rand(1.2, 3)
+    // Past the hero the weather calms down (fewer particles, fainter) so the sections stay readable
+    let quiet = false
+    const shown = () => (quiet ? Math.ceil(particles.length * QUIET_SHARE) : particles.length)
+    const level = () => (quiet ? String(QUIET_OPACITY) : '1')
 
     const fill = () => {
       if (season === 'off') {
@@ -320,11 +337,12 @@ export function Weather({ reducedMotion }: { reducedMotion: boolean }) {
       if (season === 'storm') {
         // Drops catch the light while the sky flashes
         const boost = 1 + 1.4 * drawStorm(ctx!, w, h, strike, t)
-        for (const p of particles) drawDrop(ctx!, p, boost)
+        for (let i = 0, n = shown(); i < n; i++) drawDrop(ctx!, particles[i], boost)
         ctx!.globalAlpha = 1
         return
       }
-      for (const p of particles) {
+      for (let i = 0, n = shown(); i < n; i++) {
+        const p = particles[i]
         if (season === 'spring') drawPetal(ctx!, p)
         else if (season === 'autumn') drawLeaf(ctx!, p)
         else if (season === 'summer') drawMote(ctx!, p, t)
@@ -366,13 +384,25 @@ export function Weather({ reducedMotion }: { reducedMotion: boolean }) {
           stop()
           fill()
           draw()
-          el.style.opacity = '1'
+          el.style.opacity = level()
           loop()
         },
         reducedMotion ? 0 : 450,
       )
     }
     const onVisibility = () => (document.hidden ? stop() : loop())
+
+    // Quiet once less than a quarter of the hero is on screen
+    const hero = document.getElementById('top')
+    const calm = new IntersectionObserver(
+      ([entry]) => {
+        quiet = !entry.isIntersecting || entry.intersectionRatio < 0.25
+        if (el.style.opacity !== '0') el.style.opacity = level()
+        if (reducedMotion) draw()
+      },
+      { threshold: [0, 0.25] },
+    )
+    if (hero) calm.observe(hero)
 
     resize()
     draw()
@@ -383,6 +413,7 @@ export function Weather({ reducedMotion }: { reducedMotion: boolean }) {
     return () => {
       stop()
       clearTimeout(swap)
+      calm.disconnect()
       window.removeEventListener('resize', resize)
       window.removeEventListener(WEATHER_CHANGE, onChange)
       document.removeEventListener('visibilitychange', onVisibility)
