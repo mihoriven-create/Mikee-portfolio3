@@ -28,7 +28,8 @@ export default function Scene({ mobile, reducedMotion, onReady }: Props) {
 
   return (
     <Canvas
-      dpr={[1, mobile ? 1.5 : 2]}
+      // Full-screen and always animating: capped at 1.5x so high-DPI screens keep their frame rate
+      dpr={[1, 1.5]}
       frameloop={animate ? 'always' : 'demand'}
       gl={{ antialias: mobile, powerPreference: 'high-performance', stencil: false }}
       camera={{ fov: mobile ? 70 : 55, near: 0.1, far: 220, position: [0, 2.2, CAMERA_START_Z] }}

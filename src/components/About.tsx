@@ -55,7 +55,7 @@ export function About({ reducedMotion }: { reducedMotion: boolean }) {
       <SectionHeader index="03" label={about.label} headline={about.headline} />
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.25fr]">
-        <div data-reveal="left" className="h-fit overflow-hidden rounded-2xl border border-red/25 bg-black/55 md:backdrop-blur-sm">
+        <div data-reveal="left" className="h-fit overflow-hidden rounded-2xl border border-red/25 bg-black/55 md:bg-black/[0.68]">
           {/* The supplied photo is a small head-and-shoulders crop (216×229), so it is shown whole
               rather than cropped further; a larger photo would allow more of the upper body. */}
           <div className="flex items-center gap-5 border-b border-white/10 bg-gradient-to-br from-red/15 to-transparent p-6 sm:p-8">

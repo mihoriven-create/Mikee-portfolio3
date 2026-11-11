@@ -33,7 +33,7 @@ export const site = {
   name: 'Michael John Buencamino',
   nickname: 'Mikee',
   wordmark: 'MJB',
-  role: 'CRM & Technical Operations Specialist',
+  role: 'CRM & Technical Operations Backend Specialist',
   location: 'Iloilo, Philippines',
   timeZone: 'Asia/Manila',
   // Shown only on the Email card; contact-form messages are delivered here.
@@ -380,7 +380,7 @@ export const site = {
   capabilities: {
     label: 'Technical capabilities',
     headline: ['What I', 'work on'],
-    intro: 'Eight areas of day-to-day work, each tied back to the case studies where you can see it in practice.',
+    intro: 'Nine areas of day-to-day work, most tied back to the case studies where you can see them in practice.',
     areas: [
       {
         title: 'CRM administration & configuration',
@@ -395,22 +395,28 @@ export const site = {
         seenIn: [2, 4],
       },
       {
-        title: 'AI Voice & Conversation AI',
-        body: 'Configuring and supporting AI Voice and Conversation AI — call routing, booking logic, AI summaries, notifications, and CRM integrations.',
-        tools: ['GHL AI Agents', 'OpenAI (ChatGPT)', 'LeadConnector', 'Zoho Voice'],
+        title: 'AI & intelligent systems',
+        body: 'Integrating AI into existing business operations: configuring AI agents, Voice AI and Conversation AI, building AI knowledge bases, connecting Outlook to AI assistants, and AI-assisted workflows for call routing, booking logic, AI summaries, and CRM updates.',
+        tools: ['GHL AI Agents', 'Voice AI', 'Conversation AI', 'Claude AI', 'OpenAI (ChatGPT)', 'AI knowledge bases', 'Outlook AI integration', 'LeadConnector', 'Zoho Voice'],
         seenIn: [3],
       },
       {
         title: 'API & webhook integrations',
-        body: 'Connecting CRMs, forms, and spreadsheets through REST APIs and webhooks, and troubleshooting third-party integrations end to end.',
+        body: 'Multi-platform integration: connecting CRMs, forms, phone systems, and spreadsheets through REST APIs and webhooks, and troubleshooting third-party integrations end to end.',
         tools: ['REST APIs', 'Webhooks', 'Zapier', 'Google Sheets'],
         seenIn: [1, 4],
       },
       {
-        title: 'Backend operations & troubleshooting',
-        body: 'Root-cause analysis across CRM systems, digital forms, PDF workflows, email administration, and e-signature processes.',
-        tools: ['Microsoft 365', 'Outlook', 'Adobe Acrobat Sign', 'Jotform'],
+        title: 'Technical operations & infrastructure',
+        body: 'Troubleshooting complex technical issues across CRM systems, integrations, digital forms, PDF and e-signature workflows; system monitoring, remote desktop administration, proxy configuration, DNS and domain management, and software deployment to keep business systems running.',
+        tools: ['Remote Desktop', 'ProxyLab', 'Oxylab', 'IPRoyal', 'Outlook', 'Adobe Acrobat Sign', 'Jotform'],
         seenIn: [5, 6],
+      },
+      {
+        title: 'Email & domain infrastructure',
+        body: 'Microsoft 365 administration and Exchange Online PowerShell, DNS management, SPF, DKIM and DMARC domain authentication, SMTP and Mailgun configuration, and email deliverability troubleshooting.',
+        tools: ['Microsoft 365', 'Exchange Online PowerShell', 'DNS', 'SPF · DKIM · DMARC', 'SMTP', 'Mailgun'],
+        seenIn: [],
       },
       {
         title: 'Lead management & distribution',
@@ -435,7 +441,7 @@ export const site = {
       { group: 'CRM platforms', items: ['GoHighLevel', 'Zoho CRM', 'HubSpot', 'ActiveCampaign', 'ReSimpli'] },
       {
         group: 'Automation & AI',
-        items: ['Zapier', 'Google Apps Script', 'REST APIs', 'Webhooks', 'OpenAI (ChatGPT)', 'GHL AI Agents'],
+        items: ['Zapier', 'Google Apps Script', 'REST APIs', 'Webhooks', 'OpenAI (ChatGPT)', 'Claude AI', 'GHL AI Agents'],
       },
       { group: 'Communication', items: ['Zoho Voice', 'LeadConnector', 'Microsoft Outlook', 'Instantly AI', 'Mailchimp'] },
       {
@@ -450,6 +456,11 @@ export const site = {
         group: 'Project & collaboration',
         items: ['ClickUp', 'Asana', 'Monday.com', 'Notion', 'Slack', 'Microsoft Teams', 'Zoom', 'Loom'],
       },
+      {
+        group: 'Email & domain',
+        items: ['Microsoft 365', 'Exchange Online PowerShell', 'Mailgun', 'SMTP', 'DNS management', 'SPF · DKIM · DMARC'],
+      },
+      { group: 'IT & infrastructure', items: ['Remote Desktop', 'ProxyLab', 'Oxylab', 'IPRoyal', 'GitHub', 'Vercel'] },
     ],
   },
 
@@ -483,7 +494,7 @@ export const site = {
   stats: [
     { value: 8, suffix: '', label: 'Years in hands-on IT' },
     { value: 30, suffix: '+', label: 'Case studies' },
-    { value: 36, suffix: '+', label: 'Tools in the stack' },
+    { value: 49, suffix: '+', label: 'Tools in the stack' },
     { value: 10, suffix: '', label: 'Businesses supported' },
   ],
 
@@ -507,10 +518,11 @@ export const site = {
       bullets: [
         'Manage CRM operations across GoHighLevel, Zoho CRM, and partner platforms, including pipelines, calendars, workflow automations, lead routing, and opportunity management.',
         'Design, build, and optimize SMS, email, AI, and workflow automations that improve lead nurturing, appointment booking, follow-up campaigns, and operational efficiency.',
-        'Configure and support AI Voice and Conversation AI workflows, including call routing, booking logic, AI summaries, notifications, and CRM integrations.',
-        'Troubleshoot CRM systems, APIs, webhooks, third-party integrations, digital forms, PDF workflows, and backend processes through root cause analysis.',
+        'Configure and support AI Voice, Conversation AI, and AI agent workflows, build AI knowledge bases, and integrate Claude, ChatGPT, and Outlook into business operations, including call routing, booking logic, AI summaries, and CRM integrations.',
+        'Troubleshoot and monitor CRM systems, APIs, webhooks, third-party integrations, digital forms, PDF workflows, and backend processes through root cause analysis.',
         'Develop and maintain automation solutions using Zapier, Google Apps Script, and native CRM workflows.',
-        'Manage Microsoft 365, Outlook, and Adobe Acrobat Sign, including email administration, fillable PDF forms, e-signature workflows, and document automation.',
+        'Administer Microsoft 365 and Exchange Online (including Exchange Online PowerShell), manage DNS and SPF, DKIM, and DMARC domain authentication, configure SMTP and Mailgun, and troubleshoot email deliverability.',
+        'Manage Outlook and Adobe Acrobat Sign, including fillable PDF forms, e-signature workflows, and document automation.',
         'Building a custom deal intake web application with Next.js, GitHub, and Vercel, featuring private file storage and GoHighLevel integration (in development).',
         'Built a DSCR loan calculator in Jotform using form calculation fields.',
         'Collaborate with cross-functional teams to document processes, implement new systems, and improve CRM performance, automation reliability, and operational workflows.',
@@ -557,7 +569,7 @@ export const site = {
       org: 'Self-employed',
       bullets: [
         'Provide technical support for hardware, software, and networking.',
-        'Install, configure, and maintain IT equipment and systems.',
+        'Install, configure, and maintain IT equipment, software, and systems.',
       ],
     },
   ],

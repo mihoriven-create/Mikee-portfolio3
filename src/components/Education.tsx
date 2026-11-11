@@ -9,7 +9,7 @@ export function Education() {
     <section id="education" className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-24 pt-8 sm:px-8">
       <SectionHeader index="06" label="Education" />
       <div data-reveal="right" className="mt-6">
-        <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/55 p-6 sm:flex-row sm:items-center sm:gap-6 md:backdrop-blur-sm">
+        <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/55 md:bg-black/[0.68] p-6 sm:flex-row sm:items-center sm:gap-6">
           <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl border border-red/40 bg-red/[0.08] text-red">
             <GraduationCap size={22} aria-hidden />
           </span>

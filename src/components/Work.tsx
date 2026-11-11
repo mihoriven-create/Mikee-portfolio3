@@ -209,7 +209,7 @@ function CaseCard({ c, index, total }: { c: CaseStudy; index: number; total: num
       <article
         id={c.id}
         data-case
-        className="group relative scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-black/55 p-5 sm:p-8 md:backdrop-blur-sm"
+        className="group relative scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-black/55 md:bg-black/[0.68] p-5 sm:p-8"
       >
 
         <div className="flex flex-wrap items-center gap-3">

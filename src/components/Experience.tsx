@@ -71,7 +71,7 @@ export function Experience() {
                 {/* Only the card slides in; the circle stays fixed on the rail */}
                 <div
                   data-reveal={i % 2 ? 'right' : 'left'}
-                  className={`rounded-2xl border bg-black/55 transition-colors duration-300 md:backdrop-blur-sm ${
+                  className={`rounded-2xl border bg-black/55 md:bg-black/[0.68] transition-colors duration-300 ${
                     on ? 'border-red/40' : 'border-white/10'
                   }`}
                 >

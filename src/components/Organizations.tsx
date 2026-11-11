@@ -9,7 +9,7 @@ type Org = (typeof site.work.clientWork.orgs)[number]
 function OrgCard({ org, index }: { org: Org; index: number }) {
   return (
     <li data-reveal={index % 2 ? 'right' : 'left'} className="flex">
-      <div className="flex w-full flex-col rounded-2xl border border-white/10 bg-black/55 p-5 md:backdrop-blur-sm">
+      <div className="flex w-full flex-col rounded-2xl border border-white/10 bg-black/55 md:bg-black/[0.68] p-5">
         <div className="flex items-center gap-4">
           <LogoIcon src={org.logo} name={org.name} fallback={<Building2 size={18} aria-hidden />} />
           <div className="min-w-0">

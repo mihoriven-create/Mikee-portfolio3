@@ -34,14 +34,14 @@ export function Feedback() {
       <div className="mt-12 grid gap-4 lg:grid-cols-2">
         <figure
           data-reveal="left"
-          className="relative rounded-2xl border border-red/30 bg-black/55 bg-gradient-to-br from-red/[0.12] to-transparent p-7 sm:p-10 md:backdrop-blur-sm lg:row-span-2"
+          className="relative rounded-2xl border border-red/30 bg-black/55 md:bg-black/[0.68] bg-gradient-to-br from-red/[0.12] to-transparent p-7 sm:p-10 lg:row-span-2"
         >
           <Quote size={40} className="fill-red text-red" aria-hidden />
           <blockquote className="mt-4 font-grotesk text-lg leading-relaxed text-white sm:text-xl">{lead.quote}</blockquote>
           <Attribution {...lead} />
         </figure>
         {rest.map((t) => (
-          <figure key={t.name} data-reveal="right" className="rounded-2xl border border-white/10 bg-black/55 p-7 md:backdrop-blur-sm">
+          <figure key={t.name} data-reveal="right" className="rounded-2xl border border-white/10 bg-black/55 md:bg-black/[0.68] p-7">
             <Quote size={22} className="fill-red/70 text-red/70" aria-hidden />
             <blockquote className="mt-3 text-white/85">{t.quote}</blockquote>
             <Attribution {...t} />
@@ -59,7 +59,7 @@ export function Feedback() {
         <ul className="mt-8 grid gap-4 md:grid-cols-2">
           {feedback.fromWork.map((item, i) => (
             <li key={item.name} data-reveal={i % 2 ? 'right' : 'left'} className="flex">
-              <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/55 md:backdrop-blur-sm">
+              <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/55 md:bg-black/[0.68]">
                 <button
                   type="button"
                   onClick={() => setOpen(i)}

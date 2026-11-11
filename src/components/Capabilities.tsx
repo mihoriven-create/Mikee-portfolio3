@@ -6,9 +6,11 @@ import {
   FileSpreadsheet,
   Globe,
   ListChecks,
+  Mail,
   MessagesSquare,
   Plug,
   Route,
+  Server,
   Sparkles,
   Users,
   Workflow,
@@ -20,9 +22,10 @@ import { scrollToHash } from '../lib/motion'
 import { Chip, SectionHeader, pad2 } from './ui'
 
 // One icon per capability area, in the order they appear in site.ts
-const AREA_ICONS: LucideIcon[] = [Database, Workflow, Bot, Plug, Wrench, Route, Code2, ListChecks]
-// One icon per toolkit group: CRM, automation & AI, communication, forms & documents, web, collaboration
-const TOOLKIT_ICONS: LucideIcon[] = [Database, Sparkles, MessagesSquare, FileSpreadsheet, Globe, Users]
+const AREA_ICONS: LucideIcon[] = [Database, Workflow, Bot, Plug, Wrench, Mail, Route, Code2, ListChecks]
+// One icon per toolkit group: CRM, automation & AI, communication, forms & documents, web, collaboration,
+// email & domain, IT & infrastructure
+const TOOLKIT_ICONS: LucideIcon[] = [Database, Sparkles, MessagesSquare, FileSpreadsheet, Globe, Users, Mail, Server]
 
 export function Capabilities() {
   const { capabilities, work } = site
@@ -65,6 +68,7 @@ export function Capabilities() {
                   ))}
                 </div>
               </div>
+              {area.seenIn.length > 0 && (
               <div>
                 <p className="label text-[10px]">Seen in</p>
                 <ul className="mt-2 flex flex-col gap-2">
@@ -91,6 +95,7 @@ export function Capabilities() {
                   })}
                 </ul>
               </div>
+              )}
             </div>
           </details>
           )
@@ -111,7 +116,7 @@ export function Capabilities() {
             const Icon = TOOLKIT_ICONS[i] ?? Boxes
             return (
               <div key={group.group} data-reveal={i % 2 ? 'right' : 'left'}>
-                <div className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black/55 p-5 transition duration-300 hover:border-red/50 md:backdrop-blur-sm">
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-black/55 md:bg-black/[0.68] p-5 transition duration-300 hover:border-red/50">
                   {/* thin glowing accent along the top edge */}
                   <span
                     aria-hidden
