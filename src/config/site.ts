@@ -42,6 +42,7 @@ export const site = {
   resume: RESUME,
   // The number stays in the link only; the page never displays it.
   whatsapp: 'https://wa.me/639562145204',
+  linkedin: 'https://www.linkedin.com/in/michael-john-buencamino/',
 
   nav: [
     { label: 'Home', href: '#top' },

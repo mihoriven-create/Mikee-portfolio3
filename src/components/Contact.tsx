@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { createPortal } from 'react-dom'
-import { CheckCircle2, FileDown, Loader2, Mail, MessageCircle, Send, X } from 'lucide-react'
+import { CheckCircle2, FileDown, Linkedin, Loader2, Mail, MessageCircle, Send, X } from 'lucide-react'
 import { site } from '../config/site'
 import { OPEN_CONTACT_FORM, externalProps, motion, scrollToHash } from '../lib/motion'
 import { SectionHeader } from './ui'
@@ -273,6 +273,13 @@ export function Contact() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-red/60 to-transparent" />
         <div className="label mt-5 flex flex-col items-center justify-between gap-3 text-[10px] text-white/45 sm:flex-row">
           <span>{site.footer}</span>
+          <a
+            href={site.linkedin}
+            {...externalProps(site.linkedin)}
+            className="inline-flex items-center gap-2 transition hover:text-red"
+          >
+            <Linkedin size={13} aria-hidden /> LinkedIn
+          </a>
           <a
             href="#top"
             onClick={(e) => {

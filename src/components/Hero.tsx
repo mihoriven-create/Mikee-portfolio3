@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { ArrowDown, FileDown, MessageSquare } from 'lucide-react'
+import { ArrowDown, FileDown, Linkedin, MessageSquare } from 'lucide-react'
 import { site } from '../config/site'
 import { externalProps, openContactForm, scrollToHash } from '../lib/motion'
 import { THEME_CHANGE, getTheme, nextTheme, setTheme, themeLabel } from '../lib/theme'
@@ -222,6 +222,9 @@ export function Hero({ ready, reducedMotion }: { ready: boolean; reducedMotion: 
             </a>
             <a href={site.hero.tertiary.href} {...externalProps(site.hero.tertiary.href)} className={outlinePill}>
               {site.hero.tertiary.label} <FileDown size={14} aria-hidden />
+            </a>
+            <a href={site.linkedin} {...externalProps(site.linkedin)} className={outlinePill}>
+              LinkedIn <Linkedin size={14} aria-hidden />
             </a>
           </div>
         </div>
